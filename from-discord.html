@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Switch from Discord to Skool - Migration Guide</title>
+  <meta name="description" content="Upgrading from Discord to a paid Skool community? Here's why it makes sense and how to do it.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        skool: { 50: '#f0f4ff', 100: '#dbe4ff', 200: '#bac8ff', 600: '#4c6ef5', 700: '#4263eb', 800: '#3b5bdb' },
+        dark: { 50: '#f8f9fa', 100: '#f1f3f5', 200: '#e9ecef', 500: '#adb5bd', 600: '#868e96', 700: '#495057', 800: '#343a40', 900: '#212529' }
+      }}}
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-white text-dark-800">
+
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-dark-200 z-50">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-lg text-dark-900">&larr; Skool Launchpad</a>
+      <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="bg-skool-600 hover:bg-skool-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">Start My Community</a>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 px-4">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="mb-12">
+        <div class="inline-block bg-skool-50 text-skool-700 text-sm font-medium px-3 py-1 rounded-full mb-4">Migration Guide</div>
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Upgrading from Discord to Skool</h1>
+        <p class="text-lg text-dark-600">Discord is great for free communities and real-time chat. But if you want to charge for membership, host courses, and run a professional coaching business, Skool is purpose-built for that.</p>
+      </div>
+
+      <!-- Why switch -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">Why people move from Discord to Skool</h2>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">$</span>
+            <div><strong>Built for monetization.</strong> Discord was never designed for paid communities. Collecting payments, gating content, managing subscriptions: it's all duct tape and bots. Skool has payments, subscriptions, and course sales built in.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128218;</span>
+            <div><strong>Courses included.</strong> Discord has no course delivery system. Skool's Classroom gives you modules, lessons, native video hosting, and drip content.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#127919;</span>
+            <div><strong>Professional feel.</strong> Discord feels like a gaming platform because it is one. Skool looks and feels like a professional community, which matters when you're charging people money.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128200;</span>
+            <div><strong>Async-first design.</strong> Discord's strength (real-time chat) is also its weakness: messages get buried. Skool's forum-style feed means posts stay visible and organized.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">Discord vs Skool: what changes</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-dark-50">
+                <th class="text-left p-3 font-semibold">Discord</th>
+                <th class="text-left p-3 font-semibold">Skool</th>
+                <th class="text-left p-3 font-semibold">Better?</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-dark-100">
+              <tr><td class="p-3">Free for creators</td><td class="p-3">$9-$99/mo for creators</td><td class="p-3 text-dark-600">Trade-off: you pay, but you can charge members easily</td></tr>
+              <tr><td class="p-3">Channels (real-time chat)</td><td class="p-3">Community feed (forum-style)</td><td class="p-3 text-green-600">Posts don't get buried in chat scroll</td></tr>
+              <tr><td class="p-3">No course delivery</td><td class="p-3">Full Classroom with video</td><td class="p-3 text-green-600">Huge upgrade for teaching</td></tr>
+              <tr><td class="p-3">Bots + Patreon for payments</td><td class="p-3">Native subscriptions + one-time payments</td><td class="p-3 text-green-600">No more duct tape</td></tr>
+              <tr><td class="p-3">Voice channels</td><td class="p-3">Skool Call (up to 10K)</td><td class="p-3 text-green-600">Built-in, with recording and moderation</td></tr>
+              <tr><td class="p-3">Roles + permissions</td><td class="p-3">Gamification levels</td><td class="p-3 text-green-600">Points, levels, leaderboards drive engagement</td></tr>
+              <tr><td class="p-3">Server discovery</td><td class="p-3">Skool marketplace</td><td class="p-3 text-green-600">Better for finding paying members</td></tr>
+              <tr><td class="p-3">Rich embeds + formatting</td><td class="p-3">Basic text only</td><td class="p-3 text-red-600">Downgrade: no formatting in posts</td></tr>
+              <tr><td class="p-3">Bots + automation ecosystem</td><td class="p-3">Zapier only</td><td class="p-3 text-red-600">Much less automation flexibility</td></tr>
+              <tr><td class="p-3">Real-time presence</td><td class="p-3">No real-time status</td><td class="p-3 text-dark-600">Different model: async over sync</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- When to stay on Discord -->
+      <div class="mb-10 bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <h2 class="text-lg font-bold mb-2">When Discord is actually better</h2>
+        <p class="text-dark-700 mb-3">Be honest with yourself. Stay on Discord if:</p>
+        <ul class="space-y-1 text-dark-700 text-sm">
+          <li>&#8226; Your community is free and you don't plan to charge</li>
+          <li>&#8226; Real-time chat is essential (gaming, crypto, dev communities)</li>
+          <li>&#8226; Your audience is already deeply embedded in Discord</li>
+          <li>&#8226; You rely heavily on bots and automation</li>
+        </ul>
+      </div>
+
+      <!-- Migration steps -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">How to migrate</h2>
+        <ol class="space-y-4 text-dark-700">
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">1</span>
+            <div><strong>Create your Skool community.</strong> <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="text-skool-600 underline font-medium">Sign up here</a> and follow our <a href="index.html" class="text-skool-600 underline">main guide</a> to set everything up.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">2</span>
+            <div><strong>Build your course content.</strong> Take the best resources, guides, and pinned messages from your Discord and turn them into organized Classroom lessons.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">3</span>
+            <div><strong>Announce the move in Discord.</strong> Don't just disappear. Explain why you're upgrading: better organization, courses, live events, gamification. Frame it as an upgrade, not an abandonment.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">4</span>
+            <div><strong>Offer early access.</strong> Give your most active Discord members first access to Skool with a founding member rate. They're your core community and will set the tone.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">5</span>
+            <div><strong>Run parallel for a transition period.</strong> Keep Discord active but redirect new conversations to Skool. "Great question! I answered this in detail over in Skool: [link]"</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">6</span>
+            <div><strong>Archive Discord.</strong> Set it to read-only once the transition is complete. Don't delete it entirely in case members want to reference old conversations.</div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- CTA -->
+      <div class="bg-gradient-to-br from-skool-600 to-skool-800 rounded-2xl p-6 md:p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-3">Ready to upgrade?</h2>
+        <p class="text-skool-100 mb-6">Go from a free chat server to a professional paid community with courses and live events.</p>
+        <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="inline-block bg-white text-skool-700 font-semibold px-8 py-3 rounded-lg hover:bg-skool-50 transition-colors">
+          Create Your Skool Account &rarr;
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 px-4 border-t border-dark-200">
+    <div class="max-w-3xl mx-auto text-center text-sm text-dark-500">
+      <p>This guide contains affiliate links. If you sign up for Skool through our links, we earn a commission at no extra cost to you.</p>
+    </div>
+  </footer>
+</body>
+</html>

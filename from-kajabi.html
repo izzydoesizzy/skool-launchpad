@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Switch from Kajabi to Skool - Migration Guide</title>
+  <meta name="description" content="Leaving Kajabi's pricing? Skool gives you community + courses + live calls for $99/mo flat. Here's how to switch.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        skool: { 50: '#f0f4ff', 100: '#dbe4ff', 200: '#bac8ff', 600: '#4c6ef5', 700: '#4263eb', 800: '#3b5bdb' },
+        dark: { 50: '#f8f9fa', 100: '#f1f3f5', 200: '#e9ecef', 500: '#adb5bd', 600: '#868e96', 700: '#495057', 800: '#343a40', 900: '#212529' }
+      }}}
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-white text-dark-800">
+
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-dark-200 z-50">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-lg text-dark-900">&larr; Skool Launchpad</a>
+      <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="bg-skool-600 hover:bg-skool-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">Start My Community</a>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 px-4">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="mb-12">
+        <div class="inline-block bg-skool-50 text-skool-700 text-sm font-medium px-3 py-1 rounded-full mb-4">Migration Guide</div>
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Switching from Kajabi to Skool</h1>
+        <p class="text-lg text-dark-600">Kajabi is a full marketing platform. If you're paying $149-$399/month mostly for courses and community, Skool gives you both for $99/mo flat.</p>
+      </div>
+
+      <!-- Why switch -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">Why people leave Kajabi for Skool</h2>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">$</span>
+            <div><strong>Price.</strong> This is the big one. Kajabi starts at $149/mo (Basic) and goes to $399/mo (Pro). Skool is $99/mo for unlimited everything on Pro. That's $600-$3,600/year in savings.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128101;</span>
+            <div><strong>Community-first.</strong> Kajabi added community as a feature. Skool was built around it from day one. The gamification, leaderboards, and engagement tools are deeper.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#9889;</span>
+            <div><strong>Simplicity.</strong> Kajabi has pipelines, automations, email sequences, landing pages, websites. If you're only using courses + community, you're paying for a lot of stuff you don't need.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128269;</span>
+            <div><strong>Discovery.</strong> Kajabi has no marketplace. Skool does. New members can find your community organically through Skool's built-in search.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- When Kajabi is better -->
+      <div class="mb-10 bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <h2 class="text-lg font-bold mb-2">When Kajabi is actually better</h2>
+        <p class="text-dark-700 mb-3">Kajabi wins if you need:</p>
+        <ul class="space-y-1 text-dark-700 text-sm">
+          <li>&#8226; Built-in email marketing with automations and sequences</li>
+          <li>&#8226; Landing pages and sales funnels without external tools</li>
+          <li>&#8226; A full website hosted on your custom domain</li>
+          <li>&#8226; Quizzes, assessments, and certificates in courses</li>
+          <li>&#8226; An all-in-one marketing platform (not just community + courses)</li>
+        </ul>
+        <p class="text-dark-700 mt-3 text-sm">If you're using all of Kajabi's marketing features, switching to Skool means you'll need separate tools for email (ConvertKit/Brevo), landing pages (Carrd/Leadpages), and your website.</p>
+      </div>
+
+      <!-- What maps -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">What maps from Kajabi to Skool</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-dark-50">
+                <th class="text-left p-3 font-semibold">Kajabi Feature</th>
+                <th class="text-left p-3 font-semibold">Skool Equivalent</th>
+                <th class="text-left p-3 font-semibold">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-dark-100">
+              <tr><td class="p-3">Products (courses)</td><td class="p-3">Classroom</td><td class="p-3 text-dark-600">Modules + lessons with native video. Simpler but effective.</td></tr>
+              <tr><td class="p-3">Community</td><td class="p-3">Community feed</td><td class="p-3 text-green-600">Upgrade: gamification, leaderboards, deeper engagement</td></tr>
+              <tr><td class="p-3">Events</td><td class="p-3">Calendar + Skool Call</td><td class="p-3 text-green-600">Native live video for up to 10K people</td></tr>
+              <tr><td class="p-3">Coaching</td><td class="p-3">Skool Call + DMs</td><td class="p-3 text-dark-600">Live calls work great for coaching sessions</td></tr>
+              <tr><td class="p-3">Email marketing</td><td class="p-3">Not available</td><td class="p-3 text-red-600">Need a separate email tool</td></tr>
+              <tr><td class="p-3">Landing pages</td><td class="p-3">Not available</td><td class="p-3 text-red-600">Need Carrd, Leadpages, or your own site</td></tr>
+              <tr><td class="p-3">Website</td><td class="p-3">Not available</td><td class="p-3 text-red-600">Skool is community-only, not a website builder</td></tr>
+              <tr><td class="p-3">Pipelines/funnels</td><td class="p-3">Not available</td><td class="p-3 text-red-600">Need external funnel tools</td></tr>
+              <tr><td class="p-3">Quizzes/assessments</td><td class="p-3">Not available</td><td class="p-3 text-red-600">Use Google Forms or Typeform as workarounds</td></tr>
+              <tr><td class="p-3">Payments</td><td class="p-3">Built-in via Stripe</td><td class="p-3 text-green-600">Subscriptions, one-time, free trials all supported</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Savings calc -->
+      <div class="mb-10 bg-green-50 border border-green-200 rounded-xl p-6">
+        <h2 class="text-lg font-bold mb-3">The savings math</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead><tr class="border-b border-green-200"><th class="text-left p-2">Setup</th><th class="text-left p-2">Monthly Cost</th><th class="text-left p-2">Annual Savings vs. Kajabi Basic ($149/mo)</th></tr></thead>
+            <tbody>
+              <tr><td class="p-2">Skool Pro only</td><td class="p-2 font-semibold">$99/mo</td><td class="p-2 text-green-700 font-semibold">$600/year</td></tr>
+              <tr><td class="p-2">Skool Pro + ConvertKit ($29/mo)</td><td class="p-2 font-semibold">$128/mo</td><td class="p-2 text-green-700 font-semibold">$252/year</td></tr>
+              <tr><td class="p-2">Skool Pro + ConvertKit + Carrd ($19/yr)</td><td class="p-2 font-semibold">~$130/mo</td><td class="p-2 text-green-700 font-semibold">$228/year</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-green-800 mt-3">Even with separate email and landing page tools, you save $200-$600/year vs. Kajabi Basic. Vs. Kajabi Pro ($399/mo), savings are $3,200-$3,600/year.</p>
+      </div>
+
+      <!-- Migration steps -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">How to migrate</h2>
+        <ol class="space-y-4 text-dark-700">
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">1</span>
+            <div><strong>Export everything from Kajabi.</strong> Download course videos, PDFs, member list (CSV), email list, and any resources. Do this before canceling anything.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">2</span>
+            <div><strong>Set up your email tool first.</strong> Since Kajabi has email and Skool doesn't, get ConvertKit or Brevo set up and import your email list before you start the switch.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">3</span>
+            <div><strong>Create your Skool community.</strong> <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="text-skool-600 underline font-medium">Sign up here</a> and follow our <a href="index.html" class="text-skool-600 underline">main guide</a> to build out your community.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">4</span>
+            <div><strong>Rebuild your courses in Skool.</strong> Upload videos to Classroom. Skool hosts natively. Simplify if your Kajabi course structure was complex.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">5</span>
+            <div><strong>Set up a landing page.</strong> If you need a sales page, create one on Carrd ($19/year) or Leadpages. This replaces Kajabi's built-in pages.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">6</span>
+            <div><strong>Migrate members.</strong> Email your list about the move. Highlight what's better: gamification, live calls, simpler experience, lower cost (if you're passing savings to them).</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">7</span>
+            <div><strong>Run parallel for 30 days.</strong> Keep Kajabi active during transition. Redirect all new purchases to Skool. Once members have moved, cancel Kajabi.</div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- CTA -->
+      <div class="bg-gradient-to-br from-skool-600 to-skool-800 rounded-2xl p-6 md:p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-3">Ready to cut your costs?</h2>
+        <p class="text-skool-100 mb-6">Community + courses + live calls. $99/mo flat. No feature tiers, no scaling costs.</p>
+        <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="inline-block bg-white text-skool-700 font-semibold px-8 py-3 rounded-lg hover:bg-skool-50 transition-colors">
+          Create Your Skool Account &rarr;
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 px-4 border-t border-dark-200">
+    <div class="max-w-3xl mx-auto text-center text-sm text-dark-500">
+      <p>This guide contains affiliate links. If you sign up for Skool through our links, we earn a commission at no extra cost to you.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Switch from Circle to Skool - Migration Guide</title>
+  <meta name="description" content="Moving from Circle to Skool? Here's everything that maps over, what's different, and how to make the switch smoothly.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        skool: { 50: '#f0f4ff', 100: '#dbe4ff', 200: '#bac8ff', 600: '#4c6ef5', 700: '#4263eb', 800: '#3b5bdb' },
+        dark: { 50: '#f8f9fa', 100: '#f1f3f5', 200: '#e9ecef', 500: '#adb5bd', 600: '#868e96', 700: '#495057', 800: '#343a40', 900: '#212529' }
+      }}}
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-white text-dark-800">
+
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-dark-200 z-50">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-lg text-dark-900">&larr; Skool Launchpad</a>
+      <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="bg-skool-600 hover:bg-skool-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">Start My Community</a>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 px-4">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="mb-12">
+        <div class="inline-block bg-skool-50 text-skool-700 text-sm font-medium px-3 py-1 rounded-full mb-4">Migration Guide</div>
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Switching from Circle to Skool</h1>
+        <p class="text-lg text-dark-600">Circle is a solid platform. But if you're here, you're probably looking for simpler pricing, better gamification, or Skool's built-in discovery. Here's how to make the switch.</p>
+      </div>
+
+      <!-- Why switch -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">Why people switch from Circle to Skool</h2>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">$</span>
+            <div><strong>Simpler pricing.</strong> Circle starts at $39/mo and scales to $219/mo. Skool is $99/mo flat for everything on Pro, or $9/mo to start on Hobby.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#9733;</span>
+            <div><strong>Native gamification.</strong> Skool's points, levels, and leaderboards are core to the platform. Circle added gamification in 3.0 but it's not as deeply integrated.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128269;</span>
+            <div><strong>Built-in discovery.</strong> Skool has a marketplace where people find and join communities. Circle doesn't. This means free organic traffic on Skool.</div>
+          </div>
+          <div class="flex items-start gap-3 bg-dark-50 rounded-lg p-4">
+            <span class="text-skool-600 font-bold text-lg mt-0.5">&#9889;</span>
+            <div><strong>Simplicity.</strong> Skool does fewer things but does them well. If Circle's feature set feels like overkill for your coaching business, Skool is the antidote.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What maps -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">What maps from Circle to Skool</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-dark-50">
+                <th class="text-left p-3 font-semibold">Circle Feature</th>
+                <th class="text-left p-3 font-semibold">Skool Equivalent</th>
+                <th class="text-left p-3 font-semibold">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-dark-100">
+              <tr><td class="p-3">Spaces</td><td class="p-3">Categories</td><td class="p-3 text-dark-600">Skool uses categories in a single feed instead of separate spaces</td></tr>
+              <tr><td class="p-3">Courses</td><td class="p-3">Classroom</td><td class="p-3 text-dark-600">Modules + lessons. Video hosting included. No quizzes though.</td></tr>
+              <tr><td class="p-3">Events</td><td class="p-3">Calendar</td><td class="p-3 text-dark-600">Plus Skool Call for native live video (up to 10K people)</td></tr>
+              <tr><td class="p-3">DMs</td><td class="p-3">Chat</td><td class="p-3 text-dark-600">Direct messaging works the same way</td></tr>
+              <tr><td class="p-3">Member directory</td><td class="p-3">Members + Leaderboard</td><td class="p-3 text-dark-600">Leaderboard adds a gamification layer Circle doesn't have</td></tr>
+              <tr><td class="p-3">Rich text editor</td><td class="p-3">Basic text only</td><td class="p-3 text-red-600">No bold, italic, or bullets in Skool. This is the biggest downgrade.</td></tr>
+              <tr><td class="p-3">Email broadcasts</td><td class="p-3">Not available</td><td class="p-3 text-red-600">You'll need a separate email tool (ConvertKit, Brevo, etc.)</td></tr>
+              <tr><td class="p-3">Custom domain</td><td class="p-3">Not available</td><td class="p-3 text-red-600">Always yourname.skool.com</td></tr>
+              <tr><td class="p-3">Space Groups</td><td class="p-3">Separate groups</td><td class="p-3 text-dark-600">Segmentation requires separate Skool groups ($99 each on Pro)</td></tr>
+              <tr><td class="p-3">AI features</td><td class="p-3">Not available</td><td class="p-3 text-dark-600">Circle's AI activity scores don't have a Skool equivalent</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- What you'll miss -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">What you'll miss (honest take)</h2>
+        <ul class="space-y-2 text-dark-700">
+          <li class="flex items-start gap-2"><span class="text-red-500 mt-1">&#10007;</span> Rich text formatting in posts (no bold, italic, bullets)</li>
+          <li class="flex items-start gap-2"><span class="text-red-500 mt-1">&#10007;</span> Built-in email marketing</li>
+          <li class="flex items-start gap-2"><span class="text-red-500 mt-1">&#10007;</span> Custom domain</li>
+          <li class="flex items-start gap-2"><span class="text-red-500 mt-1">&#10007;</span> Granular space-level permissions</li>
+          <li class="flex items-start gap-2"><span class="text-red-500 mt-1">&#10007;</span> AI-powered features</li>
+        </ul>
+      </div>
+
+      <!-- What you'll gain -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">What you'll gain</h2>
+        <ul class="space-y-2 text-dark-700">
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">&#10003;</span> Native gamification (points, levels, leaderboards) that drives engagement</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">&#10003;</span> Built-in discovery marketplace (free organic traffic)</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">&#10003;</span> Flat $99/mo pricing regardless of members or features</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">&#10003;</span> Skool Call for native live video (no Zoom needed)</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">&#10003;</span> Skool Games competition ecosystem</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">&#10003;</span> Simpler interface (less overwhelming for members)</li>
+        </ul>
+      </div>
+
+      <!-- Migration steps -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold mb-4">How to migrate (step by step)</h2>
+        <ol class="space-y-4 text-dark-700">
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">1</span>
+            <div><strong>Export your Circle content.</strong> Download your course materials, member list (CSV), and any resources. Circle lets you export member data from Settings.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">2</span>
+            <div><strong>Create your Skool community.</strong> <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="text-skool-600 underline font-medium">Sign up here</a> and follow our <a href="index.html" class="text-skool-600 underline">main guide</a> to set up your new community.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">3</span>
+            <div><strong>Rebuild your courses.</strong> Re-upload videos and content into Skool's Classroom. Skool hosts video natively, so no need for external hosting.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">4</span>
+            <div><strong>Set up an email tool.</strong> Since Skool doesn't have email, connect ConvertKit, Brevo, or Mailchimp via Zapier. Set up a welcome email automation.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">5</span>
+            <div><strong>Run both platforms for 2-4 weeks.</strong> Don't kill Circle immediately. Run them in parallel. Post in both. Let members migrate naturally.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">6</span>
+            <div><strong>Invite your Circle members.</strong> Email your member list with the new Skool link. Explain why you're moving and what they'll gain (gamification, live calls, simpler experience). Offer a migration incentive if needed.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-skool-600 text-white text-sm font-bold flex items-center justify-center mt-0.5">7</span>
+            <div><strong>Sunset Circle.</strong> Once 80%+ of active members have moved, cancel your Circle subscription.</div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- CTA -->
+      <div class="bg-gradient-to-br from-skool-600 to-skool-800 rounded-2xl p-6 md:p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-3">Ready to switch?</h2>
+        <p class="text-skool-100 mb-6">Start your 14-day free trial. No credit card needed for the $9/mo Hobby plan.</p>
+        <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="inline-block bg-white text-skool-700 font-semibold px-8 py-3 rounded-lg hover:bg-skool-50 transition-colors">
+          Create Your Skool Account &rarr;
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 px-4 border-t border-dark-200">
+    <div class="max-w-3xl mx-auto text-center text-sm text-dark-500">
+      <p>This guide contains affiliate links. If you sign up for Skool through our links, we earn a commission at no extra cost to you.</p>
+    </div>
+  </footer>
+</body>
+</html>

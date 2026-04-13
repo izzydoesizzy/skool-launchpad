@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Toolkit for Skool - Prompts That Build Your Community For You</title>
+  <meta name="description" content="Copy-paste AI prompts and one-click Claude links to generate everything you need for your Skool community. Courses, posts, banners, onboarding, and more.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        skool: { 50: '#f0f4ff', 100: '#dbe4ff', 200: '#bac8ff', 600: '#4c6ef5', 700: '#4263eb', 800: '#3b5bdb' },
+        dark: { 50: '#f8f9fa', 100: '#f1f3f5', 200: '#e9ecef', 300: '#dee2e6', 400: '#ced4da', 500: '#adb5bd', 600: '#868e96', 700: '#495057', 800: '#343a40', 900: '#212529' },
+        violet: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 600: '#7c3aed', 700: '#6d28d9' }
+      }}}
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .prompt-card { transition: all 0.3s ease; }
+    .prompt-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+    .prompt-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.5; }
+    .copy-btn { transition: all 0.2s; }
+    .copy-btn.copied { background-color: #059669 !important; border-color: #059669 !important; color: white !important; }
+  </style>
+</head>
+<body class="bg-white text-dark-800">
+
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-dark-200 z-50">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-lg text-dark-900">&larr; Skool Launchpad</a>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="pricing.html" class="hidden sm:inline text-dark-600 hover:text-skool-600">Pricing</a>
+        <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="bg-skool-600 hover:bg-skool-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">Start My Community</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 px-4">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Hero -->
+      <div class="mb-8 text-center">
+        <div class="inline-block bg-violet-50 text-violet-700 text-sm font-medium px-3 py-1 rounded-full mb-4">AI-Powered</div>
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Your AI Toolkit for Skool</h1>
+        <p class="text-lg text-dark-600 max-w-xl mx-auto">Every prompt you need to build your Skool community. Click to open directly in Claude, or copy and paste into any AI tool. Fill in the [brackets] with your details and go.</p>
+      </div>
+
+      <!-- How it works -->
+      <div class="mb-10 bg-violet-50 border border-violet-200 rounded-2xl p-6">
+        <h2 class="font-bold mb-2">How to use these prompts</h2>
+        <div class="grid sm:grid-cols-3 gap-4 text-sm">
+          <div class="flex items-start gap-2">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center mt-0.5">1</span>
+            <span><strong>Fill in your details</strong> using the fields above each prompt. Your answers get inserted automatically.</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center mt-0.5">2</span>
+            <span><strong>Open in your AI of choice:</strong> Claude, ChatGPT, or Perplexity. Or click Copy to paste anywhere.</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center mt-0.5">3</span>
+            <span><strong>Use the output</strong> in your Skool community. Edit as needed to match your voice.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Global Fields -->
+      <div id="global-fields" class="mb-8 bg-white border-2 border-violet-200 rounded-2xl p-5 md:p-6 shadow-sm">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+          <h2 class="font-bold text-dark-900">Your Details</h2>
+          <span class="text-xs text-dark-500 ml-1">Fill these in once, and every prompt below updates automatically.</span>
+        </div>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-dark-600 mb-1">Your Name</label>
+            <input type="text" id="gf-name" placeholder="e.g. Sarah Chen" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400">
+          </div>
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-dark-600 mb-1">Community Name</label>
+            <input type="text" id="gf-community" placeholder="e.g. The Fitness Lab" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400">
+          </div>
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-dark-600 mb-1">Topic / Niche</label>
+            <input type="text" id="gf-topic" placeholder="e.g. fitness for busy parents" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400">
+          </div>
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-dark-600 mb-1">Target Audience</label>
+            <input type="text" id="gf-audience" placeholder="e.g. working parents aged 30-45" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400">
+          </div>
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-dark-600 mb-1">Transformation / Outcome</label>
+            <input type="text" id="gf-transformation" placeholder="e.g. lose 20 lbs in 12 weeks" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400">
+          </div>
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-dark-600 mb-1">Previous Platform <span class="text-dark-400 font-normal">(if migrating)</span></label>
+            <input type="text" id="gf-platform" placeholder="e.g. Circle, Kajabi, Discord" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400">
+          </div>
+        </div>
+      </div>
+
+      <!-- Jump links -->
+      <div class="mb-10 flex flex-wrap gap-2">
+        <a href="#setup" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Setup & Branding</a>
+        <a href="#courses" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Courses</a>
+        <a href="#content" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Content & Posts</a>
+        <a href="#onboarding" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Onboarding</a>
+        <a href="#migration" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Migration</a>
+        <a href="#growth" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Growth</a>
+        <a href="#visuals" class="text-sm bg-dark-100 hover:bg-dark-200 px-3 py-1.5 rounded-full transition-colors">Visuals & Design</a>
+      </div>
+
+      <!-- ========== SETUP & BRANDING ========== -->
+      <div id="setup" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Setup & Branding</h2>
+        <p class="text-dark-600 mb-6">Get your community name, description, and profile dialed in before you build anything else.</p>
+
+        <!-- Prompt: Community Name & Description -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Generate community name & description</h3>
+          <p class="text-sm text-dark-600 mb-3">Get 5 name ideas and a one-line description that tells people exactly what transformation they'll get.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm building a Skool community about [YOUR TOPIC/NICHE]. My target audience is [DESCRIBE YOUR IDEAL MEMBER]. The main transformation I help people achieve is [OUTCOME THEY GET].
+
+Give me:
+1. 5 community name ideas (clear beats clever, should immediately tell someone what it's about)
+2. For each name, a one-line description (under 100 characters) that communicates the transformation
+3. 11 keyword suggestions for Skool's discovery search (terms my ideal member would search for)</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Membership Questions -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Generate membership screening questions</h3>
+          <p class="text-sm text-dark-600 mb-3">These appear when someone requests to join. They filter spam and give you insight into who's joining.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I run a Skool community about [YOUR TOPIC] for [YOUR AUDIENCE]. Generate 3 membership screening questions that:
+1. Help me understand new members' goals and current level
+2. Filter out spammers and people who aren't a fit
+3. Feel friendly and welcoming, not like an interrogation
+
+Keep each question under 150 characters (Skool's limit). Make the first question easy to answer.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Gamification Level Names -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Generate custom gamification level names</h3>
+          <p class="text-sm text-dark-600 mb-3">Skool has 9 levels. Custom names make your community feel unique and give members something fun to work toward.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I run a Skool community about [YOUR TOPIC] called [COMMUNITY NAME]. My vibe is [DESCRIBE THE FEEL: professional, fun, intense, casual, etc.].
+
+Generate 9 custom level names for Skool's gamification system. They should:
+- Progress from beginner to expert/legend status
+- Fit my community's theme and tone
+- Be short (1-2 words each)
+- Feel aspirational so members want to level up
+
+Give me 3 different themed sets to choose from.
+
+For reference, Skool's levels require these points: L1=0, L2=5, L3=20, L4=65, L5=155, L6=515, L7=2015, L8=8015, L9=33015.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== COURSES ========== -->
+      <div id="courses" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Courses & Classroom</h2>
+        <p class="text-dark-600 mb-6">Structure your classroom, plan your modules, and write lesson scripts. If you're migrating content from another platform, these prompts will reorganize everything for Skool's format.</p>
+
+        <!-- Prompt: Course Structure -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Plan your course structure</h3>
+          <p class="text-sm text-dark-600 mb-3">Turn your knowledge into organized Skool modules. Start here if you're building from scratch.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm building a Skool community about [YOUR TOPIC]. My members are [DESCRIBE AUDIENCE] and the main outcome is [TRANSFORMATION].
+
+Create a Skool Classroom structure with:
+1. A "Start Here" module (3 lessons: welcome, how this works, first action item)
+2. A "Quick Wins" module (2-3 lessons that give a visible result in 48 hours)
+3. Core curriculum modules (organize my main methodology into 3-4 modules, 5-8 lessons each)
+
+For each lesson give me:
+- Title
+- Description (2-3 sentences)
+- Estimated video length (5-12 min)
+- One action item for the member
+- What downloads or resources to attach (if any)
+
+Keep lessons focused on ONE concept each. Better to have more short lessons than fewer long ones.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Reorganize Exported Content -->
+        <div class="prompt-card bg-white border-2 border-amber-200 rounded-2xl p-5 mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded">MIGRATION</span>
+            <h3 class="font-bold">Reorganize exported course content for Skool</h3>
+          </div>
+          <p class="text-sm text-dark-600 mb-3">Already have courses on Kajabi, Teachable, or another platform? Export your content and paste it here to reorganize it for Skool's Classroom structure.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm migrating my courses to Skool from [PREVIOUS PLATFORM]. Below is my exported course content (paste your CSV, outline, or lesson list).
+
+Reorganize this into Skool's Classroom format:
+- Maximum 5-8 lessons per module
+- Create a "Start Here" module as the first thing new members see
+- Create a "Quick Wins" module with the easiest, most impactful content
+- Group the rest into logical modules
+- Flag any content that should be level-gated (unlocked at Level 3-4 to reward engagement)
+- Flag any content that could be cut (outdated, redundant, or too advanced for the core curriculum)
+
+For each lesson, give me: title, description (2-3 sentences), and what downloads/resources to attach.
+
+Here's my content:
+[PASTE YOUR EXPORTED COURSE OUTLINE, CSV, OR LESSON LIST HERE]</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Video Script -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Write a lesson video script</h3>
+          <p class="text-sm text-dark-600 mb-3">Don't stare at a blank screen. Get a 5-minute script you can record on your phone or Loom.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">Write a 5-minute video script for a Skool classroom lesson.
+
+Title: [LESSON TITLE]
+Topic: [WHAT THIS LESSON TEACHES]
+My audience: [WHO THEY ARE]
+What they should be able to do after watching: [OUTCOME]
+
+Structure:
+- Hook (30 seconds): Start with a question or surprising fact that makes them want to keep watching
+- Main content (3.5 minutes): Teach the ONE concept. Use examples. Keep it practical.
+- Action item (1 minute): Tell them exactly what to do next. Be specific.
+
+Tone: conversational, like you're talking to a friend. Not lecture-style. Short sentences. Use "you" a lot.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== CONTENT & POSTS ========== -->
+      <div id="content" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Content & Posts</h2>
+        <p class="text-dark-600 mb-6">Never stare at a blank post editor again. Generate your first month of content, seed posts, and engagement prompts.</p>
+
+        <!-- Prompt: 30-Day Content Calendar -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Generate a 30-day content calendar</h3>
+          <p class="text-sm text-dark-600 mb-3">A full month of posts mapped out so you always know what to write.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">Create a 30-day content calendar for my Skool community about [YOUR TOPIC]. My audience is [DESCRIBE MEMBERS].
+
+Use this weekly rhythm:
+- Monday: Goal-setting or motivation post
+- Tuesday: Educational post or tutorial
+- Wednesday: Discussion question or poll
+- Thursday: Member spotlight or win celebration
+- Friday: Weekly recap + weekend challenge
+
+For each day give me:
+1. Post title (compelling, makes people want to click)
+2. Opening line (hooks them in)
+3. Call-to-action at the end (a question to drive comments)
+
+Make posts conversational. Vary the length (some short, some detailed). Include 2-3 polls across the month (Skool polls get the most engagement).</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Seed Posts -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Generate 15 seed posts</h3>
+          <p class="text-sm text-dark-600 mb-3">Posts to fill your community before anyone joins. Nobody wants to be the first person to post in an empty room.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">Write 15 seed posts for my new Skool community about [YOUR TOPIC]. These will be posted before I invite anyone, so the community feels alive on day one.
+
+Mix of:
+- 3 educational/value posts (teach something useful)
+- 3 question/discussion posts (ask something members will want to answer)
+- 2 resource posts (share a template, tool, or checklist)
+- 2 personal story posts (share a lesson learned, behind-the-scenes)
+- 2 poll posts (3-5 options each)
+- 2 celebration/motivation posts
+- 1 "introduce yourself" prompt
+
+Each post should:
+- Be written in first person (as the community owner)
+- End with a question or call-to-action to invite responses
+- Feel natural and conversational, not corporate
+- Vary in length (some 3 sentences, some 2 paragraphs)
+
+Assign each post to a Skool category: Introductions, Wins, Questions, Resources, or General.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== ONBOARDING ========== -->
+      <div id="onboarding" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Onboarding & Welcome</h2>
+        <p class="text-dark-600 mb-6">60-80% of new members are lost in the first week because of bad onboarding. These prompts make sure yours is rock solid.</p>
+
+        <!-- Prompt: Welcome Post -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Write a pinned welcome post</h3>
+          <p class="text-sm text-dark-600 mb-3">The first thing every new member sees. Pin this to the top of your community feed.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">Write a pinned welcome post for my Skool community called [COMMUNITY NAME] about [TOPIC]. I'm [YOUR NAME] and I help [AUDIENCE] to [TRANSFORMATION].
+
+Include:
+1. A warm, personal welcome (who I am, why I built this)
+2. What this community is about (the transformation members will get)
+3. What to expect (content, calls, challenges, etc.)
+4. Their first 3 action items:
+   - Complete the "Start Here" module in the Classroom
+   - Introduce yourself in the comments (with a specific prompt to answer)
+   - [ONE MORE RELEVANT ACTION]
+5. A closing that makes them feel like they belong
+
+Tone: warm, genuine, slightly excited. Like welcoming someone into your home, not a corporate onboarding email. Keep it under 300 words.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Community Guidelines -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Write community guidelines</h3>
+          <p class="text-sm text-dark-600 mb-3">Short, friendly rules that set the tone. Pin this alongside your welcome post.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">Write community guidelines for my Skool group about [YOUR TOPIC]. 5-7 rules max.
+
+Make them:
+- Short (one line each, plus a brief explanation)
+- Friendly and positive (frame as "do this" not "don't do that")
+- Include expectations around: engagement, sharing wins, asking questions, being helpful, no spam/self-promotion
+- End with something warm like "We're glad you're here"
+
+Tone: like house rules at a friend's place, not corporate policy.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Welcome DM Templates -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Write welcome DM templates</h3>
+          <p class="text-sm text-dark-600 mb-3">DMing every new member is the #1 retention driver. These templates make it fast without feeling robotic.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">Write 5 personal welcome DM templates for new members joining my Skool community about [YOUR TOPIC]. I'm [YOUR NAME].
+
+I need:
+1. Day 1 welcome DM (warm intro, ask about their goals, point to Start Here module)
+2. Day 3 check-in DM (have they started? do they need help?)
+3. Day 7 progress DM (how's it going? celebrate any early wins)
+4. Re-engagement DM (for members who haven't posted in 7+ days)
+5. Win celebration DM (congratulate a member on an achievement)
+
+Each template should:
+- Have a [MEMBER_NAME] placeholder
+- Feel personal, not automated
+- Be 3-5 sentences max
+- End with a question or clear next step
+- Sound like me texting a friend, not a chatbot</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== MIGRATION ========== -->
+      <div id="migration" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Platform Migration</h2>
+        <p class="text-dark-600 mb-6">Moving from another platform? These prompts help you reorganize exported content and communicate the move to your members.</p>
+
+        <!-- Prompt: Community Post Migration -->
+        <div class="prompt-card bg-white border-2 border-amber-200 rounded-2xl p-5 mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded">MIGRATION</span>
+            <h3 class="font-bold">Rewrite posts for Skool format</h3>
+          </div>
+          <p class="text-sm text-dark-600 mb-3">Take your best posts from Circle, Discord, Facebook Groups, or wherever, and adapt them for Skool.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm moving my community to Skool from [PREVIOUS PLATFORM]. Below are my top-performing posts from that platform.
+
+Rewrite each one for Skool's format:
+- Skool has NO rich text formatting (no bold, italic, or bullets), so use plain text that reads well
+- End each post with a question to drive comments (engagement = points = gamification)
+- Keep the core message but make them feel fresh, not recycled
+- Assign each to a Skool category: Introductions, Wins, Questions, Resources, or General
+
+Here are my posts:
+[PASTE YOUR TOP POSTS HERE]</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Migration Emails -->
+        <div class="prompt-card bg-white border-2 border-amber-200 rounded-2xl p-5 mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded">MIGRATION</span>
+            <h3 class="font-bold">Write migration announcement emails</h3>
+          </div>
+          <p class="text-sm text-dark-600 mb-3">Tell your existing members about the move. Three emails: announcement, reminder, last call.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm migrating my community from [PREVIOUS PLATFORM] to Skool. I need 3 emails to send to my existing members:
+
+Email 1 - Announcement (send 2 weeks before):
+Tell them about the move, why (gamification, live calls, courses all in one place, better experience), what they gain, and what to expect. Include the Skool join link.
+
+Email 2 - Reminder (send 1 week before):
+Remind them, address concerns, highlight what's already set up in the new community, create excitement.
+
+Email 3 - Last call (send day of):
+Final push. Urgency. "The new community is live. Join now so you don't miss the first live call on [DATE]."
+
+My community is about [TOPIC]. My name is [YOUR NAME].
+
+Tone: warm and excited, not corporate. These people already trust me. Talk to them like friends.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== GROWTH ========== -->
+      <div id="growth" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Growth & Launch</h2>
+        <p class="text-dark-600 mb-6">Prompts to help you get your first members and build momentum.</p>
+
+        <!-- Prompt: Personal Invitation DMs -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Write personal invitation messages</h3>
+          <p class="text-sm text-dark-600 mb-3">Personal invitations convert 5-10x higher than mass emails. These feel genuine, not salesy.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm launching a Skool community about [TOPIC] called [NAME]. I want to personally invite people from my network.
+
+Write 5 personal invitation message variants for:
+1. Past clients or customers
+2. Email subscribers who've engaged with my content
+3. Social media followers who comment on my posts
+4. Friends/colleagues in my niche
+5. People I've met in other Skool communities
+
+Each message should:
+- Feel personal, not mass-produced
+- Explain the value in 2-3 sentences
+- Mention the founding member rate ([PRICE]/month, locked in forever)
+- Include a clear call-to-action (join link)
+- Be under 100 words (people don't read long DMs)
+- NOT sound like a sales pitch</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Founding Member Announcement -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Write a founding member launch post</h3>
+          <p class="text-sm text-dark-600 mb-3">Announce your community on social media with urgency and excitement.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I'm launching a Skool community called [NAME] about [TOPIC]. Write a social media announcement post for [PLATFORM: LinkedIn/Instagram/Twitter/Facebook].
+
+Details:
+- Founding member rate: [PRICE]/month (regular will be [HIGHER PRICE])
+- First [NUMBER] members lock in this rate forever
+- Deadline: [DATE]
+- What members get: [LIST 3-5 KEY BENEFITS]
+- Join link: [URL]
+
+The post should:
+- Open with a hook (not "I'm excited to announce...")
+- Explain the value in plain language
+- Create urgency without being pushy
+- End with a clear CTA
+- Fit the platform's style and character limits
+- Sound like me, not a marketer</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== VISUALS ========== -->
+      <div id="visuals" class="mb-12 scroll-mt-20">
+        <h2 class="text-xl font-bold mb-1">Visuals & Design</h2>
+        <p class="text-dark-600 mb-6">Generate descriptions for AI image tools (Midjourney, DALL-E, Canva AI) to create your community banner, classroom thumbnails, and profile images.</p>
+
+        <!-- Prompt: Community Banner -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Design a community banner</h3>
+          <p class="text-sm text-dark-600 mb-3">Skool banners are 1280x720px. This prompt generates a description you can use in any AI image tool.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I need a community banner image for my Skool group. Help me create it.
+
+Community name: [NAME]
+Topic: [TOPIC]
+Vibe: [DESCRIBE: professional, fun, bold, minimal, warm, energetic, etc.]
+Brand colors (if any): [COLORS or "suggest some"]
+Target audience: [WHO]
+
+Give me:
+1. A detailed image description I can paste into an AI image tool (Midjourney, DALL-E, or Canva AI) to generate a 1280x720px banner. It should look professional and clearly communicate the topic.
+2. A Canva-friendly alternative: describe a simple layout I can recreate manually in Canva (background color, text placement, any icons or shapes).
+3. 3 text overlay options (community name + tagline) that would look good on the banner.
+
+Important: The banner should work well as a small thumbnail on mobile too. Keep text large and readable. Less is more.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt: Classroom Thumbnails -->
+        <div class="prompt-card bg-white border border-dark-200 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold mb-2">Design classroom module thumbnails</h3>
+          <p class="text-sm text-dark-600 mb-3">Make your Classroom look polished with consistent module thumbnails.</p>
+          <div class="bg-dark-50 rounded-lg p-4 mb-3">
+            <p class="prompt-text text-dark-700">I need thumbnail images for my Skool Classroom modules. Help me create a consistent set.
+
+Community name: [NAME]
+Brand colors: [COLORS or "suggest some"]
+Number of modules: [HOW MANY]
+Module names: [LIST THEM]
+
+Give me:
+1. A visual system (consistent style across all thumbnails): describe the layout, color scheme, typography approach, and any icons or numbering system
+2. For each module, a specific image description I can paste into an AI image tool or recreate in Canva
+3. Keep the style simple and clean. These thumbnails are small on mobile.
+
+Format: square thumbnails. Text should be large and readable. Each thumbnail should feel like part of a set but be distinguishable.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 ai-buttons">
+            <a href="#" class="claude-link inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+              Claude
+            </a>
+            <a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-sky-50 border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-100 transition-colors" target="_blank" rel="noopener">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Perplexity
+            </a>
+            <button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="bg-gradient-to-br from-violet-600 to-skool-800 rounded-2xl p-6 md:p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-3">Ready to build?</h2>
+        <p class="text-violet-100 mb-6 max-w-lg mx-auto">You've got the prompts. Now create your community and use them.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="inline-block bg-white text-skool-700 font-semibold px-8 py-3 rounded-lg hover:bg-skool-50 transition-colors">
+            Create Your Skool Account &rarr;
+          </a>
+          <a href="index.html" class="inline-block border border-white/30 text-white font-medium px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
+            Back to the Full Guide
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 px-4 border-t border-dark-200">
+    <div class="max-w-3xl mx-auto text-center text-sm text-dark-500">
+      <p>This guide contains affiliate links. If you sign up for Skool through our links, we earn a commission at no extra cost to you.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Global field -> bracket mapping. Each global field replaces multiple bracket variants.
+    const GLOBAL_MAP = {
+      'gf-name':           ['[YOUR NAME]'],
+      'gf-community':      ['[COMMUNITY NAME]', '[NAME]'],
+      'gf-topic':          ['[YOUR TOPIC/NICHE]', '[YOUR TOPIC]', '[TOPIC]'],
+      'gf-audience':       ['[YOUR AUDIENCE]', '[AUDIENCE]', '[DESCRIBE YOUR IDEAL MEMBER]', '[DESCRIBE AUDIENCE]', '[DESCRIBE MEMBERS]', '[WHO]', '[WHO THEY ARE]'],
+      'gf-transformation': ['[TRANSFORMATION]', '[OUTCOME]', '[OUTCOME THEY GET]'],
+      'gf-platform':       ['[PREVIOUS PLATFORM]'],
+    };
+
+    // All brackets covered by global fields (flattened)
+    const globalBrackets = new Set(Object.values(GLOBAL_MAP).flat());
+
+    // Store original text per card
+    const cardData = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // --- Set up per-card local fields (only for brackets NOT covered globally) ---
+      document.querySelectorAll('.prompt-card').forEach((card, i) => {
+        const promptEl = card.querySelector('.prompt-text');
+        if (!promptEl) return;
+        const originalText = promptEl.textContent.trim();
+        cardData[i] = { card, originalText };
+        card.dataset.cardIndex = i;
+
+        // Find brackets in this prompt
+        const bracketRegex = /\[([A-Z][A-Z0-9 _/:()\-,.'&]+)\]/g;
+        const allMatches = [...originalText.matchAll(bracketRegex)];
+        const uniqueBrackets = [...new Map(allMatches.map(m => [m[0], m[1]])).entries()];
+
+        // Filter out brackets handled by global fields
+        const localBrackets = uniqueBrackets.filter(([bracket]) => !globalBrackets.has(bracket));
+
+        if (localBrackets.length > 0) {
+          const fieldsDiv = document.createElement('div');
+          fieldsDiv.className = 'bg-dark-50 border border-dark-200 rounded-lg p-3 mb-3';
+          fieldsDiv.innerHTML = '<p class="text-xs font-semibold text-dark-500 uppercase tracking-wide mb-2">Additional details for this prompt</p>';
+
+          const fieldGrid = document.createElement('div');
+          fieldGrid.className = 'grid gap-2';
+          if (localBrackets.length > 1) fieldGrid.className += ' sm:grid-cols-2';
+
+          localBrackets.forEach(([bracket, inner]) => {
+            const label = inner.toLowerCase().replace(/[_/]/g, ' ')
+              .replace(/\b\w/g, c => c.toUpperCase())
+              .replace(/^Your /, '').replace(/^Describe[: ]*/i, '');
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex flex-col';
+
+            const labelEl = document.createElement('label');
+            labelEl.className = 'text-xs font-medium text-dark-600 mb-0.5';
+            labelEl.textContent = label;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = inner;
+            input.dataset.bracket = bracket;
+            input.className = 'local-field w-full text-sm border border-dark-300 rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400';
+            input.addEventListener('input', updateAllCards);
+
+            wrapper.appendChild(labelEl);
+            wrapper.appendChild(input);
+            fieldGrid.appendChild(wrapper);
+          });
+
+          fieldsDiv.appendChild(fieldGrid);
+          const promptContainer = promptEl.closest('.bg-dark-50');
+          promptContainer.parentElement.insertBefore(fieldsDiv, promptContainer);
+        }
+      });
+
+      // --- Global field listeners ---
+      document.querySelectorAll('.global-field').forEach(input => {
+        input.addEventListener('input', updateAllCards);
+      });
+
+      // Initial render
+      updateAllCards();
+    });
+
+    function getFilledText(cardEntry) {
+      let text = cardEntry.originalText;
+
+      // 1. Apply global fields
+      for (const [fieldId, brackets] of Object.entries(GLOBAL_MAP)) {
+        const input = document.getElementById(fieldId);
+        if (input && input.value.trim()) {
+          brackets.forEach(bracket => {
+            const escaped = bracket.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            text = text.replace(new RegExp(escaped, 'g'), input.value.trim());
+          });
+        }
+      }
+
+      // 2. Apply local (per-card) fields
+      cardEntry.card.querySelectorAll('.local-field').forEach(input => {
+        if (input.value.trim()) {
+          const escaped = input.dataset.bracket.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          text = text.replace(new RegExp(escaped, 'g'), input.value.trim());
+        }
+      });
+
+      return text;
+    }
+
+    function updateAllCards() {
+      cardData.forEach(entry => {
+        if (!entry) return;
+        const text = getFilledText(entry);
+
+        // Update displayed prompt
+        const promptEl = entry.card.querySelector('.prompt-text');
+        if (promptEl) promptEl.textContent = text;
+
+        // Update deep links
+        const encoded = encodeURIComponent(text);
+        const claude = entry.card.querySelector('.claude-link');
+        const chatgpt = entry.card.querySelector('.chatgpt-link');
+        const perplexity = entry.card.querySelector('.perplexity-link');
+        if (claude) claude.href = `https://claude.ai/new?q=${encoded}`;
+        if (chatgpt) chatgpt.href = `https://chatgpt.com/?q=${encoded}`;
+        if (perplexity) perplexity.href = `https://www.perplexity.ai/search?q=${encoded}`;
+      });
+    }
+
+    function copyPrompt(btn) {
+      const card = btn.closest('.prompt-card');
+      const promptText = card.querySelector('.prompt-text').textContent.trim();
+      navigator.clipboard.writeText(promptText).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Copied!`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
