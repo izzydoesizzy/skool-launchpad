@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Build Your First Skool Community - Free Step-by-Step Guide</title>
-  <meta name="description" content="The simplest guide to launching your first paid community on Skool. Free, step-by-step, no fluff. Includes AI prompts to generate everything you need.">
+  <meta name="description" content="The simplest guide to launching your first paid community on Skool. Free, step-by-step, with AI prompts and pricing guidance built right in.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     .step-card { transition: all 0.3s ease; }
     .step-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
     .gate-blur { filter: blur(6px); pointer-events: none; user-select: none; }
@@ -31,9 +31,23 @@
     .fade-in { animation: fadeIn 0.4s ease forwards; }
     .checklist li { position: relative; padding-left: 1.75rem; margin-bottom: 0.75rem; }
     .checklist li::before { content: ''; position: absolute; left: 0; top: 0.35rem; width: 1rem; height: 1rem; border: 2px solid #ced4da; border-radius: 4px; }
-    .ai-btn { display: inline-flex; align-items: center; gap: 0.375rem; background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; font-size: 0.8125rem; font-weight: 500; padding: 0.5rem 0.875rem; border-radius: 0.5rem; transition: all 0.2s; text-decoration: none; }
-    .ai-btn:hover { background: #ede9fe; }
-    .ai-btn svg { width: 14px; height: 14px; }
+    .prompt-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.5; }
+    .copy-btn.copied { background-color: #059669 !important; border-color: #059669 !important; color: white !important; }
+    /* Progress bar */
+    .progress-bar { position: sticky; top: 52px; z-index: 40; }
+    .phase-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #ced4da; background: white; transition: all 0.3s; flex-shrink: 0; }
+    .phase-dot.active { border-color: #4c6ef5; background: #4c6ef5; box-shadow: 0 0 0 3px rgba(76,110,245,0.2); }
+    .phase-dot.completed { border-color: #4c6ef5; background: #4c6ef5; }
+    .phase-line { height: 2px; background: #dee2e6; flex: 1; }
+    .phase-line.completed { background: #4c6ef5; }
+    /* AI drawer */
+    .ai-drawer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; opacity: 0; }
+    .ai-drawer.open { max-height: 2000px; opacity: 1; }
+    .ai-toggle-arrow { transition: transform 0.3s; display: inline-block; }
+    .ai-toggle-arrow.open { transform: rotate(180deg); }
+    /* Pricing accordion */
+    .pricing-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .pricing-body.open { max-height: 2000px; }
   </style>
 </head>
 <body class="bg-white text-dark-800">
@@ -42,151 +56,130 @@
   <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-dark-200 z-50">
     <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="index.html" class="font-bold text-lg text-dark-900">Skool Launchpad</a>
-      <div class="flex items-center gap-4 text-sm">
-        <a href="#steps" class="hidden sm:inline text-dark-600 hover:text-skool-600">Guide</a>
-        <a href="pricing.html" class="hidden sm:inline text-dark-600 hover:text-skool-600">Pricing</a>
-        <a href="ai-prompts.html" class="hidden sm:inline text-dark-600 hover:text-skool-600">AI Toolkit</a>
+      <div class="flex items-center gap-3 text-sm">
+        <a href="#phase-1" class="hidden md:inline text-dark-500 hover:text-skool-600">Start</a>
+        <a href="#phase-2" class="hidden md:inline text-dark-500 hover:text-skool-600">Build</a>
+        <a href="#phase-3" class="hidden md:inline text-dark-500 hover:text-skool-600">Launch</a>
+        <a href="#phase-4" class="hidden md:inline text-dark-500 hover:text-skool-600">Grow</a>
         <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="bg-skool-600 hover:bg-skool-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">Start My Community</a>
       </div>
     </div>
   </nav>
 
+  <!-- Progress Bar -->
+  <div class="progress-bar bg-white/90 backdrop-blur-sm border-b border-dark-100">
+    <div class="max-w-md mx-auto px-6 py-3 flex items-center">
+      <button onclick="scrollToPhase(1)" class="flex flex-col items-center gap-1 group">
+        <div class="phase-dot active" data-phase="1"></div>
+        <span class="text-[10px] font-medium text-dark-500 group-hover:text-skool-600">Get Started</span>
+      </button>
+      <div class="phase-line" data-line="1"></div>
+      <button onclick="scrollToPhase(2)" class="flex flex-col items-center gap-1 group">
+        <div class="phase-dot" data-phase="2"></div>
+        <span class="text-[10px] font-medium text-dark-500 group-hover:text-skool-600">Build</span>
+      </button>
+      <div class="phase-line" data-line="2"></div>
+      <button onclick="scrollToPhase(3)" class="flex flex-col items-center gap-1 group">
+        <div class="phase-dot" data-phase="3"></div>
+        <span class="text-[10px] font-medium text-dark-500 group-hover:text-skool-600">Launch</span>
+      </button>
+      <div class="phase-line" data-line="3"></div>
+      <button onclick="scrollToPhase(4)" class="flex flex-col items-center gap-1 group">
+        <div class="phase-dot" data-phase="4"></div>
+        <span class="text-[10px] font-medium text-dark-500 group-hover:text-skool-600">Grow</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Hero -->
-  <header class="pt-24 pb-16 px-4">
+  <header class="pt-12 pb-12 px-4">
     <div class="max-w-3xl mx-auto text-center">
       <div class="inline-block bg-skool-50 text-skool-700 text-sm font-medium px-3 py-1 rounded-full mb-6">100% Free Guide</div>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-dark-900 leading-tight mb-4">
-        Build Your First Skool Community
-      </h1>
-      <p class="text-lg text-dark-600 max-w-xl mx-auto mb-8">
-        Hey, welcome. This is the guide I wish I had when I started. No fluff, no $997 course about courses. Just the steps, in order, with AI prompts to help you build everything along the way.
+      <h1 class="text-4xl md:text-5xl font-extrabold text-dark-900 leading-tight mb-4">Build Your First Skool Community</h1>
+      <p class="text-lg text-dark-600 max-w-xl mx-auto mb-6">
+        Hey, welcome. This guide walks you through everything in 4 phases: get started, build your community, launch it, and grow. AI prompts and pricing advice are built right in, so you never have to leave this page.
       </p>
-      <a href="#step-1" class="inline-block bg-skool-600 hover:bg-skool-700 text-white font-semibold px-8 py-3.5 rounded-lg text-lg transition-colors">
-        Let's Build This &darr;
-      </a>
+      <a href="#phase-1" class="inline-block bg-skool-600 hover:bg-skool-700 text-white font-semibold px-8 py-3.5 rounded-lg text-lg transition-colors">Let's Build This &darr;</a>
     </div>
   </header>
 
-  <!-- What you'll build -->
-  <section class="pb-16 px-4">
+  <!-- Global Details Bar (collapsible) -->
+  <section class="pb-8 px-4">
     <div class="max-w-3xl mx-auto">
-      <div class="bg-dark-50 rounded-2xl p-6 md:p-8">
-        <h2 class="font-bold text-lg mb-2">By the end of this guide, you'll have:</h2>
-        <p class="text-sm text-dark-600 mb-4">Everything below takes about 2 hours. Some of it takes 5 minutes with the AI prompts we've included.</p>
-        <div class="grid md:grid-cols-2 gap-3">
-          <div class="flex items-start gap-2"><span class="text-skool-600 font-bold mt-0.5">&#10003;</span><span>A live Skool community ready for members</span></div>
-          <div class="flex items-start gap-2"><span class="text-skool-600 font-bold mt-0.5">&#10003;</span><span>Your first course module set up</span></div>
-          <div class="flex items-start gap-2"><span class="text-skool-600 font-bold mt-0.5">&#10003;</span><span>A professional banner and thumbnails</span></div>
-          <div class="flex items-start gap-2"><span class="text-skool-600 font-bold mt-0.5">&#10003;</span><span>Welcome content that onboards new members</span></div>
-          <div class="flex items-start gap-2"><span class="text-skool-600 font-bold mt-0.5">&#10003;</span><span>Gamification configured with custom levels</span></div>
-          <div class="flex items-start gap-2"><span class="text-skool-600 font-bold mt-0.5">&#10003;</span><span>Your first month of content mapped out</span></div>
+      <button onclick="toggleGlobalFields()" id="gf-toggle" class="w-full flex items-center justify-between bg-violet-50 border border-violet-200 rounded-2xl px-5 py-4 hover:bg-violet-100 transition-colors text-left">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
+          <div>
+            <span class="font-semibold text-violet-800">Personalize this guide</span>
+            <span class="text-sm text-violet-600 ml-2">Fill in your details once. Every AI prompt below updates automatically.</span>
+          </div>
+        </div>
+        <span id="gf-arrow" class="ai-toggle-arrow text-violet-600 text-lg">&#9662;</span>
+      </button>
+      <div id="global-fields" class="ai-drawer bg-white border border-t-0 border-violet-200 rounded-b-2xl px-5 pb-5 pt-4 -mt-2">
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <div class="flex flex-col"><label class="text-xs font-medium text-dark-600 mb-1">Your Name</label><input type="text" id="gf-name" placeholder="e.g. Sarah Chen" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400"></div>
+          <div class="flex flex-col"><label class="text-xs font-medium text-dark-600 mb-1">Community Name</label><input type="text" id="gf-community" placeholder="e.g. The Fitness Lab" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400"></div>
+          <div class="flex flex-col"><label class="text-xs font-medium text-dark-600 mb-1">Topic / Niche</label><input type="text" id="gf-topic" placeholder="e.g. fitness for busy parents" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400"></div>
+          <div class="flex flex-col"><label class="text-xs font-medium text-dark-600 mb-1">Target Audience</label><input type="text" id="gf-audience" placeholder="e.g. working parents aged 30-45" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400"></div>
+          <div class="flex flex-col"><label class="text-xs font-medium text-dark-600 mb-1">Transformation / Outcome</label><input type="text" id="gf-transformation" placeholder="e.g. lose 20 lbs in 12 weeks" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400"></div>
+          <div class="flex flex-col"><label class="text-xs font-medium text-dark-600 mb-1">Previous Platform <span class="text-dark-400 font-normal">(if migrating)</span></label><input type="text" id="gf-platform" placeholder="e.g. Circle, Kajabi, Discord" class="global-field w-full text-sm border border-dark-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 bg-white placeholder-dark-400"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Steps -->
-  <section id="steps" class="pb-20 px-4">
-    <div class="max-w-3xl mx-auto space-y-8">
+  <!-- ═══════════════════ PHASE 1: GET STARTED ═══════════════════ -->
+  <section id="phase-1" data-phase-section="1" class="pb-12 px-4 scroll-mt-28">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-skool-600 text-white font-bold text-sm">1</span>
+        <h2 class="text-2xl font-extrabold text-dark-900">Get Started</h2>
+      </div>
+      <div class="space-y-8">
 
-      <!-- ==================== STEP 1: THE GATE ==================== -->
-      <div id="step-1" class="step-card bg-white border-2 border-skool-200 rounded-2xl p-6 md:p-8 scroll-mt-20">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-skool-600 text-white font-bold text-lg">1</span>
-          <h2 class="text-xl font-bold">Create Your Skool Account</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          Everything starts here. You need a Skool account to follow along with the rest of the guide. It's free to start with a 14-day trial on the Hobby plan ($9/month after that). Takes about 60 seconds.
-        </p>
+      <!-- Step: Create Account (THE GATE) -->
+      <div id="step-1" class="step-card bg-white border-2 border-skool-200 rounded-2xl p-6 md:p-8">
+        <h3 class="text-xl font-bold mb-3">Create Your Skool Account</h3>
+        <p class="text-dark-600 mb-4">Everything starts here. It's free to start with a 14-day trial on the Hobby plan ($9/month after that). Takes about 60 seconds.</p>
         <div class="bg-skool-50 rounded-xl p-5 mb-4">
           <p class="text-sm text-dark-600 mb-3">Skool gives you everything in one place: community, courses, live calls, payments, and gamification. No duct-taping 5 different tools together.</p>
-          <a
-            id="signup-btn"
-            href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534"
-            target="_blank"
-            rel="noopener"
-            onclick="handleSignupClick()"
-            class="inline-block w-full md:w-auto text-center bg-skool-600 hover:bg-skool-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors text-lg"
-          >
-            Create Your Free Skool Account &rarr;
-          </a>
+          <a id="signup-btn" href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" onclick="handleSignupClick()" class="inline-block w-full md:w-auto text-center bg-skool-600 hover:bg-skool-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors text-lg">Create Your Free Skool Account &rarr;</a>
         </div>
         <div id="gate-locked" class="text-center mt-4">
           <p class="text-sm text-dark-500 mb-3">Click the button above to create your account, then continue below.</p>
-          <button
-            id="continue-btn"
-            onclick="unlockGuide()"
-            class="hidden bg-dark-800 hover:bg-dark-900 text-white font-medium px-6 py-2.5 rounded-lg transition-colors"
-          >
-            I've created my account &mdash; show me the guide &#10003;
-          </button>
+          <button id="continue-btn" onclick="unlockGuide()" class="hidden bg-dark-800 hover:bg-dark-900 text-white font-medium px-6 py-2.5 rounded-lg transition-colors">I've created my account &mdash; show me the guide &#10003;</button>
         </div>
       </div>
 
-      <!-- GATE OVERLAY for steps 2+ -->
+      <!-- GATE OVERLAY -->
       <div id="gate-overlay" class="relative">
         <div id="gate-message" class="absolute inset-0 z-10 flex items-start justify-center pt-12">
           <div class="bg-white border border-dark-200 rounded-xl shadow-lg px-6 py-4 text-center max-w-sm">
-            <p class="font-semibold text-dark-800 mb-1">Complete Step 1 first</p>
+            <p class="font-semibold text-dark-800 mb-1">Complete the step above first</p>
             <p class="text-sm text-dark-500">Create your Skool account to unlock the rest of the guide.</p>
           </div>
         </div>
-        <div id="gated-content" class="gate-blur space-y-8">
+        <div id="gated-content" class="gate-blur">
+        <div class="space-y-8">
 
-      <!-- ==================== STEP 2: EXPLORE FIRST ==================== -->
+      <!-- Step: Explore -->
       <div class="step-card bg-white border-2 border-amber-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 text-white font-bold text-lg">2</span>
-          <h2 class="text-xl font-bold">Explore Before You Build</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          I know you're excited to start building, but trust me on this: spend an hour or two inside other Skool communities first. See what the best ones look like. See how they onboard members, structure their classroom, and run their feed. You'll avoid so many mistakes.
-        </p>
+        <h3 class="text-xl font-bold mb-3">Explore Before You Build</h3>
+        <p class="text-dark-600 mb-4">I know you're excited to start building, but trust me on this: spend an hour or two inside other Skool communities first. See what the best ones look like. You'll avoid so many mistakes.</p>
         <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-5">
-          <p class="text-sm text-amber-800"><strong>This is important.</strong> The Skool community is really tight-knit. You're not building alone. The best community owners on Skool are active members of other communities too. Join others, inspire one another, help one another grow.</p>
+          <p class="text-sm text-amber-800"><strong>This is important.</strong> The Skool community is really tight-knit. You're not building alone. Join others, inspire one another, help one another grow.</p>
         </div>
-
-        <h3 class="font-semibold text-dark-800 mb-3">Communities you should join right now:</h3>
+        <h4 class="font-semibold text-dark-800 mb-3">Communities you should join right now:</h4>
         <div class="space-y-3 mb-5">
-          <a href="https://www.skool.com/discovery" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors">
-            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128269;</span>
-            <div>
-              <strong>Skool Discovery</strong>
-              <p class="text-sm text-dark-600">Browse all public communities. Find ones in your niche. Join a few. Observe how they're structured.</p>
-            </div>
-          </a>
-          <a href="https://www.skool.com/community" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors">
-            <span class="text-skool-600 font-bold text-lg mt-0.5">&#127968;</span>
-            <div>
-              <strong>Skoolers (Official Skool Community)</strong>
-              <p class="text-sm text-dark-600">The community for community owners. 180,000+ members. Join this one immediately. It's where you learn from other creators and get help.</p>
-            </div>
-          </a>
-          <a href="https://www.skool.com/founders-guild/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors">
-            <span class="text-skool-600 font-bold text-lg mt-0.5">&#9889;</span>
-            <div>
-              <strong>Founders Guild</strong> <span class="text-xs text-dark-500">(Bill Widmer & Rex Loyer)</span>
-              <p class="text-sm text-dark-600">Great community for founders building their Skool communities. Actionable strategies and genuine support.</p>
-            </div>
-          </a>
-          <a href="https://www.skool.com/evelyn/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors">
-            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128640;</span>
-            <div>
-              <strong>Evelyn Weiss's Community</strong>
-              <p class="text-sm text-dark-600">Teaches $5/day ads. Anti-guru, super reasonable prices, genuinely one of the best people in the Skool ecosystem. Has a free 7-day trial traffic challenge. By far the best-value community out there.</p>
-            </div>
-          </a>
-          <a href="https://www.skool.com/freelancewitherica/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors">
-            <span class="text-skool-600 font-bold text-lg mt-0.5">&#128171;</span>
-            <div>
-              <strong>Freelance with Erica</strong>
-              <p class="text-sm text-dark-600">Another incredible value-add community. Came from the Evelyn world. Brings a ton of value for freelancers and community builders.</p>
-            </div>
-          </a>
+          <a href="https://www.skool.com/discovery" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors"><span class="text-skool-600 font-bold text-lg mt-0.5">&#128269;</span><div><strong>Skool Discovery</strong><p class="text-sm text-dark-600">Browse all public communities. Find ones in your niche. Join a few. Observe how they're structured.</p></div></a>
+          <a href="https://www.skool.com/community" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors"><span class="text-skool-600 font-bold text-lg mt-0.5">&#127968;</span><div><strong>Skoolers (Official Skool Community)</strong><p class="text-sm text-dark-600">The community for community owners. 180,000+ members. Join this one immediately.</p></div></a>
+          <a href="https://www.skool.com/founders-guild/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors"><span class="text-skool-600 font-bold text-lg mt-0.5">&#9889;</span><div><strong>Founders Guild</strong> <span class="text-xs text-dark-500">(Bill Widmer & Rex Loyer)</span><p class="text-sm text-dark-600">Great community for founders. Actionable strategies and genuine support.</p></div></a>
+          <a href="https://www.skool.com/evelyn/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors"><span class="text-skool-600 font-bold text-lg mt-0.5">&#128640;</span><div><strong>Evelyn Weiss's Community</strong><p class="text-sm text-dark-600">$5/day ads. Anti-guru, super reasonable prices. Free 7-day trial traffic challenge. Best-value community out there.</p></div></a>
+          <a href="https://www.skool.com/freelancewitherica/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="flex items-start gap-3 bg-dark-50 rounded-lg p-4 hover:bg-dark-100 transition-colors"><span class="text-skool-600 font-bold text-lg mt-0.5">&#128171;</span><div><strong>Freelance with Erica</strong><p class="text-sm text-dark-600">Incredible value for freelancers and community builders.</p></div></a>
         </div>
-
-        <h3 class="font-semibold text-dark-800 mb-3">While you're exploring, set up your profile:</h3>
-        <p class="text-sm text-dark-600 mb-3">Your profile is how people discover you. When you comment on posts, people click your name. Make sure what they find is compelling.</p>
+        <h4 class="font-semibold text-dark-800 mb-3">While you're exploring, set up your profile:</h4>
+        <p class="text-sm text-dark-600 mb-3">Your profile is how people discover you. When you comment on posts, people click your name.</p>
         <ul class="checklist text-dark-700">
           <li><strong>Make your profile clear.</strong> It should convey what you do and who you help in one glance.</li>
           <li><strong>Add a link to your community</strong> (once you create it). This is how organic discovery works.</li>
@@ -194,316 +187,436 @@
         </ul>
       </div>
 
-      <!-- ==================== STEP 3: NAME & SETUP ==================== -->
+      </div><!-- /phase-1 inner space -->
+    </div>
+  </div><!-- /gate-overlay -->
+  </div><!-- /phase-1 space -->
+  </div>
+  </section>
+
+  <!-- ═══════════════════ PHASE 2: BUILD ═══════════════════ -->
+  <section id="phase-2" data-phase-section="2" class="pb-12 px-4 scroll-mt-28 bg-dark-50">
+    <div class="max-w-3xl mx-auto pt-10">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-dark-800 text-white font-bold text-sm">2</span>
+        <h2 class="text-2xl font-extrabold text-dark-900">Build Your Community</h2>
+      </div>
+      <p class="text-dark-600 mb-8">Now the fun part. You're going to set up your community, build your classroom, and configure gamification. This is where the AI prompts really help -- click any purple button to generate what you need.</p>
+      <div class="space-y-8">
+
+      <!-- Step: Name & Setup -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">3</span>
-          <h2 class="text-xl font-bold">Name & Set Up Your Community</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          Alright, time to create your community. Don't overthink this part. You can change everything later. The goal right now is just to get it set up so you have something to build on.
-        </p>
+        <h3 class="text-xl font-bold mb-3">Name & Set Up Your Community</h3>
+        <p class="text-dark-600 mb-4">Don't overthink this part. You can change everything later. The goal right now is just to get it created.</p>
         <ul class="checklist text-dark-700 mb-4">
-          <li><strong>Pick a clear name.</strong> Your name should say what it's about. "The Fitness Lab" beats "John's Group." Clear beats clever every time.</li>
-          <li><strong>Write a one-line description.</strong> What transformation do members get? "Go from couch to 5K in 8 weeks" is better than "A fitness community."</li>
-          <li><strong>Upload a cover image.</strong> 1280x720px works well. Canva has free templates, or use the AI prompt below to generate a design brief.</li>
-          <li><strong>Add community keywords.</strong> Skool lets you add up to 11 keywords for discovery search. Use terms your ideal member would search for.</li>
+          <li><strong>Pick a clear name.</strong> "The Fitness Lab" beats "John's Group." Clear beats clever every time.</li>
+          <li><strong>Write a one-line description.</strong> "Go from couch to 5K in 8 weeks" beats "A fitness community."</li>
+          <li><strong>Upload a cover image.</strong> 1280x720px. Canva has free templates, or use the AI prompt below.</li>
+          <li><strong>Add community keywords.</strong> Up to 11 keywords for Skool's discovery search.</li>
         </ul>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#setup" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Generate name & description with AI
-          </a>
-          <a href="ai-prompts.html#visuals" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Design your banner with AI
-          </a>
-        </div>
-        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <p class="text-sm text-amber-800"><strong>Don't get stuck here.</strong> You can rename your community, rewrite the description, and swap the cover image anytime. Just get it created and keep moving.</p>
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Generate name & description with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I'm building a Skool community about [YOUR TOPIC/NICHE]. My target audience is [DESCRIBE YOUR IDEAL MEMBER]. The main transformation I help people achieve is [OUTCOME THEY GET].
+
+Give me:
+1. 5 community name ideas (clear beats clever, should immediately tell someone what it's about)
+2. For each name, a one-line description (under 100 characters) that communicates the transformation
+3. 11 keyword suggestions for Skool's discovery search (terms my ideal member would search for)</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Design your banner with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I need a community banner image for my Skool group. Help me create it.
+
+Community name: [NAME]
+Topic: [TOPIC]
+Vibe: [DESCRIBE: professional, fun, bold, minimal, warm, energetic, etc.]
+Brand colors (if any): [COLORS or "suggest some"]
+Target audience: [WHO]
+
+Give me:
+1. A detailed image description I can paste into an AI image tool (Midjourney, DALL-E, or Canva AI) to generate a 1280x720px banner
+2. A Canva-friendly alternative: describe a simple layout I can recreate manually
+3. 3 text overlay options (community name + tagline)
+
+Important: The banner should work well as a small thumbnail on mobile too. Keep text large and readable.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ==================== STEP 4: SETTINGS ==================== -->
+      <!-- Step: Settings -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">4</span>
-          <h2 class="text-xl font-bold">Configure Your Settings</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          Before you invite anyone, take 10 minutes to get the basics right. These settings shape the experience your members will have from the moment they click "Join."
-        </p>
+        <h3 class="text-xl font-bold mb-3">Configure Your Settings</h3>
+        <p class="text-dark-600 mb-4">Before you invite anyone, take 10 minutes to get the basics right. These settings shape the experience your members will have from the moment they click "Join."</p>
         <ul class="checklist text-dark-700 mb-4">
-          <li><strong>Set your privacy.</strong> "Public" means anyone on Skool can find you (good for growth). "Private" means invite-only (good for exclusivity). Most communities start public.</li>
-          <li><strong>Add membership questions.</strong> 2-3 screening questions when people request to join. This filters spam and gives you insight into new members. Example: "What's your biggest challenge with [topic]?"</li>
-          <li><strong>Set your pricing.</strong> Not sure what to charge? Check our <a href="pricing.html" class="text-skool-600 underline font-medium">Pricing Guide</a> for data-backed recommendations. Short answer: start free if you have no audience, $29-$97/month if you do.</li>
-          <li><strong>Create 3-5 categories.</strong> Organize your feed with categories like: Introductions, Wins, Questions, Resources, General. Members can filter posts by category.</li>
+          <li><strong>Set your privacy.</strong> "Public" means anyone on Skool can find you. "Private" means invite-only. Most communities start public.</li>
+          <li><strong>Add membership questions.</strong> 2-3 screening questions when people request to join. Filters spam and gives you insight.</li>
+          <li><strong>Set your pricing.</strong> Not sure? See the pricing section in Phase 4 below, or start free and add paid later.</li>
+          <li><strong>Create 3-5 categories.</strong> Introductions, Wins, Questions, Resources, General.</li>
         </ul>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#setup" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Generate membership questions with AI
-          </a>
-          <a href="pricing.html" class="ai-btn" style="background:#f0fdf4;border-color:#bbf7d0;color:#15803d;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-            Pricing Guide: What to charge
-          </a>
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Generate membership questions with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I run a Skool community about [YOUR TOPIC] for [YOUR AUDIENCE]. Generate 3 membership screening questions that:
+1. Help me understand new members' goals and current level
+2. Filter out spammers and people who aren't a fit
+3. Feel friendly and welcoming, not like an interrogation
+
+Keep each question under 150 characters (Skool's limit). Make the first question easy to answer.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
         </div>
         <div class="bg-skool-50 border border-skool-200 rounded-lg p-4">
-          <p class="text-sm text-skool-800"><strong>Free vs. Paid?</strong> If you're not sure, start free. Build up 50-100 members, prove the value, then launch a paid tier. Skool's freemium mode lets you run free and paid in the same group.</p>
+          <p class="text-sm text-skool-800"><strong>Free vs. Paid?</strong> If you're not sure, start free. Build to 50-100 members, prove the value, then add a paid tier. Skool's freemium mode lets you run free and paid in the same group. See <a href="#pricing-section" class="underline font-medium">Pricing & Monetization</a> in Phase 4 for data-backed guidance.</p>
         </div>
       </div>
 
-      <!-- ==================== STEP 5: CLASSROOM ==================== -->
+      <!-- Step: Classroom -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">5</span>
-          <h2 class="text-xl font-bold">Build Your Classroom</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          This is where your courses live, and it's probably the part people overthink the most. You do NOT need 50 lessons on day one. You need three modules. That's it. You can always add more later.
-        </p>
+        <h3 class="text-xl font-bold mb-3">Build Your Classroom</h3>
+        <p class="text-dark-600 mb-4">This is where your courses live, and it's the part people overthink the most. You do NOT need 50 lessons. You need three modules. That's it.</p>
         <ul class="checklist text-dark-700 mb-4">
-          <li><strong>Create a "Start Here" module.</strong> 3 short lessons: (1) Welcome and what to expect, (2) How this community works, (3) Your first action item. Keep each under 5 minutes.</li>
-          <li><strong>Create a "Quick Wins" module.</strong> 2-3 lessons that give members a visible result in their first 48 hours. This is the single most important thing for retention.</li>
-          <li><strong>Create your core module.</strong> 5-8 lessons covering your main methodology. Each lesson: one video (5-12 min) + description + any downloads. Teach the essential path, not everything you know.</li>
+          <li><strong>Create a "Start Here" module.</strong> 3 short lessons: welcome, how this works, first action item. Under 5 minutes each.</li>
+          <li><strong>Create a "Quick Wins" module.</strong> 2-3 lessons that give a visible result in 48 hours. Most important thing for retention.</li>
+          <li><strong>Create your core module.</strong> 5-8 lessons covering your main methodology. One video (5-12 min) + description + downloads per lesson.</li>
         </ul>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#courses" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Plan your course structure with AI
-          </a>
-          <a href="ai-prompts.html#courses" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Write a lesson script with AI
-          </a>
-          <a href="ai-prompts.html#visuals" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Design classroom thumbnails with AI
-          </a>
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Plan your course structure with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I'm building a Skool community about [YOUR TOPIC]. My members are [DESCRIBE AUDIENCE] and the main outcome is [TRANSFORMATION].
+
+Create a Skool Classroom structure with:
+1. A "Start Here" module (3 lessons: welcome, how this works, first action item)
+2. A "Quick Wins" module (2-3 lessons that give a visible result in 48 hours)
+3. Core curriculum modules (organize my main methodology into 3-4 modules, 5-8 lessons each)
+
+For each lesson give me: title, description (2-3 sentences), estimated video length (5-12 min), one action item, and what downloads to attach. Keep lessons focused on ONE concept each.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Write a lesson script with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">Write a 5-minute video script for a Skool classroom lesson.
+
+Title: [LESSON TITLE]
+Topic: [WHAT THIS LESSON TEACHES]
+My audience: [WHO THEY ARE]
+What they should be able to do after watching: [OUTCOME]
+
+Structure: Hook (30 sec), Main content (3.5 min), Action item (1 min). Tone: conversational, like talking to a friend. Not lecture-style.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Design classroom thumbnails with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I need thumbnail images for my Skool Classroom modules.
+
+Community name: [NAME]
+Brand colors: [COLORS or "suggest some"]
+Number of modules: [HOW MANY]
+Module names: [LIST THEM]
+
+Give me: 1. A visual system (consistent style across all thumbnails), 2. For each module, a specific image description I can paste into Canva AI or Midjourney, 3. Keep it simple and clean. Square thumbnails, large readable text.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
         </div>
-        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <p class="text-sm text-amber-800"><strong>Recording tip:</strong> You can record lessons with your phone or Loom. Skool hosts the video for you with automatic captions. No YouTube or Vimeo needed. Done is better than perfect.</p>
-        </div>
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4"><p class="text-sm text-amber-800"><strong>Recording tip:</strong> Record with your phone or Loom. Skool hosts video with auto-captions. Done is better than perfect.</p></div>
       </div>
 
-      <!-- ==================== STEP 6: GAMIFICATION ==================== -->
+      <!-- Step: Gamification -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">6</span>
-          <h2 class="text-xl font-bold">Set Up Gamification</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          This is one of Skool's secret weapons and most people don't set it up properly. Members earn points when others like their posts and comments. Points unlock levels. Levels unlock content. It's a flywheel that drives engagement on autopilot.
-        </p>
+        <h3 class="text-xl font-bold mb-3">Set Up Gamification</h3>
+        <p class="text-dark-600 mb-4">One of Skool's secret weapons. Members earn points when others like their posts and comments. Points unlock levels. Levels unlock content. It drives engagement on autopilot.</p>
         <ul class="checklist text-dark-700 mb-4">
-          <li><strong>Customize your level names.</strong> Skool has 9 levels. Don't leave them as "Level 1, Level 2." Rename them to fit your community theme. Makes it fun and aspirational.</li>
-          <li><strong>Lock content behind levels.</strong> Put your best advanced content at Level 3-4. Members need 20-65 likes to reach that, which rewards early engagement without making it feel impossible.</li>
-          <li><strong>Leave the leaderboard on.</strong> It's on by default. Friendly competition keeps people posting. Communities with gamification see 1.71% engagement rates, double those without it.</li>
+          <li><strong>Customize your level names.</strong> 9 levels. Don't leave them as "Level 1, Level 2." Rename them to fit your theme.</li>
+          <li><strong>Lock content behind levels.</strong> Best advanced content at Level 3-4 (20-65 likes to reach). Rewards engagement.</li>
+          <li><strong>Leave the leaderboard on.</strong> Friendly competition keeps people posting. 1.71% engagement rate vs. 0.84% without it.</li>
         </ul>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#setup" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Generate custom level names with AI
-          </a>
-        </div>
-        <div class="bg-skool-50 border border-skool-200 rounded-lg p-4">
-          <p class="text-sm text-skool-800"><strong>How it works:</strong> 1 like = 1 point. L1=0 pts, L2=5, L3=20, L4=65, L5=155, L6=515, L7=2015, L8=8015, L9=33015. The early levels are quick to reach, which keeps new members motivated.</p>
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Generate custom level names with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I run a Skool community about [YOUR TOPIC] called [COMMUNITY NAME]. My vibe is [DESCRIBE THE FEEL: professional, fun, intense, casual, etc.].
+
+Generate 9 custom level names for Skool's gamification system. They should: progress from beginner to expert/legend, fit my theme, be short (1-2 words each), feel aspirational.
+
+Give me 3 different themed sets to choose from.
+
+Points required: L1=0, L2=5, L3=20, L4=65, L5=155, L6=515, L7=2015, L8=8015, L9=33015.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ==================== STEP 7: WELCOME CONTENT ==================== -->
-      <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">7</span>
-          <h2 class="text-xl font-bold">Create Your Welcome Content</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          Nobody wants to be the first person to post in an empty room. Before you invite anyone, seed the community with content so it feels alive from day one. This is where the AI prompts really shine, because you can generate all of this in minutes.
-        </p>
-        <ul class="checklist text-dark-700 mb-4">
-          <li><strong>Write and pin a welcome post.</strong> Introduce yourself, explain what this community is about, and give new members their first 3 action items.</li>
-          <li><strong>Seed 10-15 posts.</strong> Mix of educational content, questions, resource shares, and polls. This gives new members something to respond to immediately.</li>
-          <li><strong>Write a community guidelines post.</strong> Keep it short. 5-7 rules. Pin it. Friendly and positive, not corporate.</li>
-          <li><strong>Schedule your first live call.</strong> Use Skool's built-in Calendar. Even one monthly Q&A call dramatically reduces churn vs. communities with no live events.</li>
-        </ul>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#onboarding" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Write your welcome post with AI
-          </a>
-          <a href="ai-prompts.html#content" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Generate 15 seed posts with AI
-          </a>
-          <a href="ai-prompts.html#onboarding" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Write community guidelines with AI
-          </a>
-        </div>
-        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <p class="text-sm text-amber-800"><strong>Pro tip:</strong> Make your seeded posts invite responses. "What's your #1 goal this month?" works way better than "Welcome to the community!" Posts that ask questions get 3x more comments.</p>
-        </div>
       </div>
-
-      <!-- ==================== STEP 8: FIRST MEMBERS ==================== -->
-      <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">8</span>
-          <h2 class="text-xl font-bold">Get Your First Members</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          Your community is set up. Now it's time to get real people in the door. There are a million ways to do this, but let me save you some time: here are the ones that actually work, starting with the most organic.
-        </p>
-
-        <h3 class="font-semibold text-dark-800 mb-2">The organic way (start here)</h3>
-        <p class="text-sm text-dark-600 mb-3">The most organic way is the one most people skip: be genuinely helpful in other Skool communities. Have a good profile that conveys what you do. Have a clear link to your community. Then go help, encourage, and engage. A ton. People notice.</p>
-        <ul class="checklist text-dark-700 mb-5">
-          <li><strong>Engage way more than you post.</strong> Comment on other people's posts. Sprinkle in the occasional post in Skoolers or other communities, but only if you have something truly valuable to share. Don't be spammy.</li>
-          <li><strong>The best members come from Skool.</strong> People already active on the platform understand how it works. Help them, and they'll become your members.</li>
-          <li><strong>Send personal invitations.</strong> Message 20-30 people from your existing network. Personal invites convert 5-10x higher than mass emails.</li>
-          <li><strong>DM every new member.</strong> When someone joins, send them a personal message. Ask about their goals. Point them to Start Here. This is the #1 driver of early retention.</li>
-        </ul>
-
-        <h3 class="font-semibold text-dark-800 mb-2">Content and social media</h3>
-        <p class="text-sm text-dark-600 mb-3">Pick one platform and show up consistently. LinkedIn, TikTok, Instagram, YouTube, whatever you prefer. A lot of successful Skool creators use YouTube.</p>
-        <ul class="checklist text-dark-700 mb-5">
-          <li><strong>Daily content on your chosen platform.</strong> Consistency matters more than which platform. Share what you're building, behind-the-scenes, and the value members get.</li>
-          <li><strong>Offer a founding member rate.</strong> If your community is paid, first 20-50 members get a locked-in price forever. "50 spots at this price" or "founding rate ends Friday."</li>
-        </ul>
-
-        <h3 class="font-semibold text-dark-800 mb-2">Paid ads (when you're ready)</h3>
-        <div class="bg-skool-50 border border-skool-200 rounded-lg p-4 mb-4">
-          <p class="text-sm text-skool-800">
-            <strong>Want to learn ads?</strong> <a href="https://www.skool.com/evelyn/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="text-skool-700 underline font-medium">Evelyn Weiss</a> teaches you how to get started with $5/day ads and has built an empire around it. Anti-guru, super reasonable prices. Join her free 7-day trial traffic challenge. You won't regret it.
-          </p>
-        </div>
-
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#growth" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Write invitation DMs with AI
-          </a>
-          <a href="ai-prompts.html#growth" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Write a launch announcement with AI
-          </a>
-          <a href="ai-prompts.html#onboarding" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Generate welcome DM templates with AI
-          </a>
-        </div>
-
-        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-          <p class="text-sm text-green-800"><strong>Realistic timeline:</strong> 0-50 members in 2-4 weeks. 50-100 in 30 days. Don't stress about growing fast. A community of 50 engaged members is worth more than 500 lurkers.</p>
-        </div>
-      </div>
-
-      <!-- ==================== STEP 9: FIRST WEEK ==================== -->
-      <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-dark-800 text-white font-bold text-lg">9</span>
-          <h2 class="text-xl font-bold">Your First Week Playbook</h2>
-        </div>
-        <p class="text-dark-600 mb-4">
-          You're live. Members are joining. Now the real work begins: showing up consistently. Consistency matters so much more than intensity. Here's a simple weekly rhythm to follow. You can always adjust it, but this gives you a structure to lean on.
-        </p>
-        <div class="overflow-x-auto mb-4">
-          <table class="w-full text-sm border-collapse">
-            <thead>
-              <tr class="bg-dark-50">
-                <th class="text-left p-3 font-semibold rounded-tl-lg">Day</th>
-                <th class="text-left p-3 font-semibold rounded-tr-lg">What to Post</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-dark-100">
-              <tr><td class="p-3 font-medium">Monday</td><td class="p-3">Goal-setting post: "What's your #1 goal this week?"</td></tr>
-              <tr><td class="p-3 font-medium">Tuesday</td><td class="p-3">Educational post or new classroom lesson</td></tr>
-              <tr><td class="p-3 font-medium">Wednesday</td><td class="p-3">Poll or discussion question about a common challenge</td></tr>
-              <tr><td class="p-3 font-medium">Thursday</td><td class="p-3">Member spotlight or win celebration</td></tr>
-              <tr><td class="p-3 font-medium">Friday</td><td class="p-3">Weekly recap + weekend challenge</td></tr>
-              <tr><td class="p-3 font-medium">Weekend</td><td class="p-3">Light engagement: respond to comments, DM inactive members</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="flex flex-wrap gap-2 mb-4">
-          <a href="ai-prompts.html#content" class="ai-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            Generate a 30-day content calendar with AI
-          </a>
-        </div>
-        <div class="bg-skool-50 border border-skool-200 rounded-lg p-4">
-          <p class="text-sm text-skool-800"><strong>The golden rule:</strong> Post 30-60 minutes before you plan to be active in the community. The best engagement happens when you respond quickly to early comments. If you post and disappear, engagement dies.</p>
-        </div>
-      </div>
-
-      <!-- ==================== DONE ==================== -->
-      <div class="bg-gradient-to-br from-skool-600 to-skool-800 rounded-2xl p-6 md:p-8 text-white text-center">
-        <h2 class="text-2xl font-bold mb-3">You did it. You're ready.</h2>
-        <p class="text-skool-100 mb-6 max-w-lg mx-auto">
-          That's the whole thing. No 47-step process. Create your community, put content in it, invite people, show up consistently. The rest is iteration. And remember: you're not doing this alone. The Skool community is tight-knit. Lean on it.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534"
-            target="_blank"
-            rel="noopener"
-            class="inline-block bg-white text-skool-700 font-semibold px-8 py-3 rounded-lg hover:bg-skool-50 transition-colors"
-          >
-            Create Your Skool Account
-          </a>
-        </div>
-      </div>
-
-        </div><!-- /gated-content -->
-      </div><!-- /gate-overlay -->
-
     </div>
   </section>
 
-  <!-- Resources Section -->
-  <section id="switching" class="pb-20 px-4 bg-dark-50">
-    <div class="max-w-3xl mx-auto pt-16">
-      <h2 class="text-2xl font-bold text-center mb-2">More resources</h2>
-      <p class="text-center text-dark-600 mb-8">Everything you need to build a successful Skool community.</p>
+  <!-- ═══════════════════ PHASE 3: LAUNCH ═══════════════════ -->
+  <section id="phase-3" data-phase-section="3" class="pb-12 px-4 scroll-mt-28">
+    <div class="max-w-3xl mx-auto pt-10">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-dark-800 text-white font-bold text-sm">3</span>
+        <h2 class="text-2xl font-extrabold text-dark-900">Launch</h2>
+      </div>
+      <p class="text-dark-600 mb-8">Your community is built. Now fill it with content and get people in the door. This is the phase where most people stall -- the AI prompts make it easy.</p>
+      <div class="space-y-8">
 
-      <!-- AI + Pricing -->
-      <div class="grid sm:grid-cols-2 gap-4 mb-6">
-        <a href="ai-prompts.html" class="block bg-white border-2 border-violet-200 rounded-xl p-5 hover:border-violet-300 hover:shadow-md transition-all">
-          <div class="flex items-center gap-2 mb-2">
-            <svg class="w-5 h-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg>
-            <h3 class="font-bold text-lg text-violet-700">AI Toolkit</h3>
+      <!-- Step: Welcome Content -->
+      <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
+        <h3 class="text-xl font-bold mb-3">Create Your Welcome Content</h3>
+        <p class="text-dark-600 mb-4">Nobody wants to be the first person to post in an empty room. Seed the community with content before inviting anyone. This is where the AI prompts really shine -- you can generate all of this in minutes.</p>
+        <ul class="checklist text-dark-700 mb-4">
+          <li><strong>Write and pin a welcome post.</strong> Introduce yourself, what this community is about, and the first 3 action items.</li>
+          <li><strong>Seed 10-15 posts.</strong> Mix of educational content, questions, polls, and resource shares.</li>
+          <li><strong>Write community guidelines.</strong> 5-7 rules. Friendly and positive, not corporate. Pin it.</li>
+          <li><strong>Schedule your first live call.</strong> Even one monthly Q&A call dramatically reduces churn.</li>
+        </ul>
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Write your welcome post with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">Write a pinned welcome post for my Skool community called [COMMUNITY NAME] about [TOPIC]. I'm [YOUR NAME] and I help [YOUR AUDIENCE] to [TRANSFORMATION].
+
+Include: 1. A warm, personal welcome, 2. What this community is about, 3. What to expect, 4. Their first 3 action items (complete Start Here module, introduce yourself, one more relevant action), 5. A closing that makes them feel like they belong.
+
+Tone: warm, genuine, like welcoming someone into your home. Keep it under 300 words.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
           </div>
-          <p class="text-sm text-dark-600">Copy-paste AI prompts for everything: course structure, welcome posts, content calendars, banners, thumbnails, DM templates, and more. Click to open directly in Claude.</p>
-        </a>
-        <a href="pricing.html" class="block bg-white border-2 border-green-200 rounded-xl p-5 hover:border-green-300 hover:shadow-md transition-all">
-          <div class="flex items-center gap-2 mb-2">
-            <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-            <h3 class="font-bold text-lg text-green-700">Pricing Guide</h3>
+
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Generate 15 seed posts with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">Write 15 seed posts for my new Skool community about [YOUR TOPIC]. These will be posted before I invite anyone.
+
+Mix: 3 educational, 3 questions/discussions, 2 resources, 2 personal stories, 2 polls (3-5 options each), 2 celebration/motivation, 1 "introduce yourself" prompt.
+
+Each post should: be in first person, end with a question or CTA, feel natural, vary in length. Assign each to a category: Introductions, Wins, Questions, Resources, or General.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
           </div>
-          <p class="text-sm text-dark-600">Data-backed pricing models from the top 1,000 Skool communities. 5 proven models, revenue calculator, founding member strategy, and common mistakes to avoid.</p>
-        </a>
+
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Write community guidelines with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">Write community guidelines for my Skool group about [YOUR TOPIC]. 5-7 rules max. Make them short, friendly, and positive (frame as "do this" not "don't do that"). Include expectations around engagement, sharing wins, asking questions, being helpful, no spam. End with something warm. Tone: like house rules at a friend's place, not corporate policy.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Migration Guides -->
-      <h3 class="font-semibold text-dark-700 text-center mb-4">Switching from another platform?</h3>
+      <!-- Step: First Members -->
+      <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
+        <h3 class="text-xl font-bold mb-3">Get Your First Members</h3>
+        <p class="text-dark-600 mb-4">Your community is set up. Now get real people in the door. There are a million ways, but here are the ones that actually work, starting with the most organic.</p>
+
+        <h4 class="font-semibold text-dark-800 mb-2">The organic way (start here)</h4>
+        <p class="text-sm text-dark-600 mb-3">Be genuinely helpful in other Skool communities. Have a good profile. Have a clear link to your community. Then engage. A ton. People notice.</p>
+        <ul class="checklist text-dark-700 mb-5">
+          <li><strong>Engage way more than you post.</strong> Comment on other people's posts. Only share your own stuff when it's truly valuable. Don't be spammy.</li>
+          <li><strong>Send personal invitations.</strong> Message 20-30 people from your network. Personal invites convert 5-10x higher than mass emails.</li>
+          <li><strong>DM every new member.</strong> Ask about their goals. Point them to Start Here. This is the #1 driver of early retention.</li>
+        </ul>
+
+        <h4 class="font-semibold text-dark-800 mb-2">Content and social media</h4>
+        <ul class="checklist text-dark-700 mb-5">
+          <li><strong>Daily content on your chosen platform.</strong> LinkedIn, TikTok, Instagram, YouTube. Consistency matters more than the platform.</li>
+          <li><strong>Offer a founding member rate.</strong> First 20-50 members get a locked-in price forever. Creates urgency.</li>
+        </ul>
+
+        <h4 class="font-semibold text-dark-800 mb-2">Paid ads (when you're ready)</h4>
+        <div class="bg-skool-50 border border-skool-200 rounded-lg p-4 mb-4">
+          <p class="text-sm text-skool-800"><strong>Want to learn ads?</strong> <a href="https://www.skool.com/evelyn/about?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="text-skool-700 underline font-medium">Evelyn Weiss</a> teaches $5/day ads. Anti-guru, super reasonable. Join her free 7-day trial traffic challenge.</p>
+        </div>
+
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Write invitation DMs with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">I'm launching a Skool community about [TOPIC] called [NAME]. Write 5 personal invitation message variants for: 1. Past clients, 2. Email subscribers, 3. Social media followers, 4. Friends/colleagues in my niche, 5. People from other Skool communities.
+
+Each should: feel personal, explain the value in 2-3 sentences, mention the founding rate ([PRICE]/month locked in forever), include a CTA, be under 100 words, NOT sound like a sales pitch.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Generate welcome DM templates with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">Write 5 personal welcome DM templates for new members joining my Skool community about [YOUR TOPIC]. I'm [YOUR NAME].
+
+I need: 1. Day 1 welcome (warm intro, ask goals, point to Start Here), 2. Day 3 check-in (have they started?), 3. Day 7 progress (celebrate early wins), 4. Re-engagement (members inactive 7+ days), 5. Win celebration (congratulate achievement).
+
+Each: [MEMBER_NAME] placeholder, feel personal not automated, 3-5 sentences max, end with question or next step.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4"><p class="text-sm text-green-800"><strong>Realistic timeline:</strong> 0-50 members in 2-4 weeks. 50-100 in 30 days. A community of 50 engaged members is worth more than 500 lurkers.</p></div>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PHASE 4: GROW ═══════════════════ -->
+  <section id="phase-4" data-phase-section="4" class="pb-12 px-4 scroll-mt-28 bg-dark-50">
+    <div class="max-w-3xl mx-auto pt-10">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-dark-800 text-white font-bold text-sm">4</span>
+        <h2 class="text-2xl font-extrabold text-dark-900">Grow</h2>
+      </div>
+      <p class="text-dark-600 mb-8">You're live. Members are joining. Now it's about showing up consistently and making smart decisions about pricing and content.</p>
+      <div class="space-y-8">
+
+      <!-- Step: First Week -->
+      <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
+        <h3 class="text-xl font-bold mb-3">Your First Week Playbook</h3>
+        <p class="text-dark-600 mb-4">Consistency matters so much more than intensity. Here's a simple weekly rhythm you can lean on.</p>
+        <div class="overflow-x-auto mb-4">
+          <table class="w-full text-sm border-collapse">
+            <thead><tr class="bg-dark-50"><th class="text-left p-3 font-semibold rounded-tl-lg">Day</th><th class="text-left p-3 font-semibold rounded-tr-lg">What to Post</th></tr></thead>
+            <tbody class="divide-y divide-dark-100">
+              <tr><td class="p-3 font-medium">Monday</td><td class="p-3">Goal-setting: "What's your #1 goal this week?"</td></tr>
+              <tr><td class="p-3 font-medium">Tuesday</td><td class="p-3">Educational post or new classroom lesson</td></tr>
+              <tr><td class="p-3 font-medium">Wednesday</td><td class="p-3">Poll or discussion question</td></tr>
+              <tr><td class="p-3 font-medium">Thursday</td><td class="p-3">Member spotlight or win celebration</td></tr>
+              <tr><td class="p-3 font-medium">Friday</td><td class="p-3">Weekly recap + weekend challenge</td></tr>
+              <tr><td class="p-3 font-medium">Weekend</td><td class="p-3">Respond to comments, DM inactive members</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-2 mb-4">
+          <button onclick="toggleDrawer(this)" class="inline-flex items-center gap-1.5 bg-violet-50 border border-violet-200 text-violet-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-100 transition-colors"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/><circle cx="12" cy="12" r="4"/></svg> Generate a 30-day content calendar with AI <span class="ai-toggle-arrow">&#9662;</span></button>
+          <div class="ai-drawer">
+            <div class="prompt-card bg-violet-50 border border-violet-200 rounded-xl p-4 mt-2">
+              <div class="bg-white rounded-lg p-4 mb-3"><p class="prompt-text text-dark-700">Create a 30-day content calendar for my Skool community about [YOUR TOPIC]. My audience is [DESCRIBE MEMBERS].
+
+Weekly rhythm: Monday=goals, Tuesday=educational, Wednesday=discussion/poll, Thursday=member spotlight, Friday=recap+challenge.
+
+For each day give me: 1. Post title, 2. Opening line (hook), 3. CTA at the end (question to drive comments). Make posts conversational, vary length. Include 2-3 polls across the month.</p></div>
+              <div class="flex flex-wrap gap-2 ai-buttons"><a href="#" class="claude-link inline-flex items-center gap-1.5 bg-white border border-violet-200 text-violet-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-violet-100 transition-colors" target="_blank" rel="noopener">Claude</a><a href="#" class="chatgpt-link inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors" target="_blank" rel="noopener">ChatGPT</a><a href="#" class="perplexity-link inline-flex items-center gap-1.5 bg-white border border-sky-200 text-sky-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-sky-50 transition-colors" target="_blank" rel="noopener">Perplexity</a><button onclick="copyPrompt(this)" class="copy-btn inline-flex items-center gap-1.5 border border-dark-300 text-dark-600 text-sm font-medium px-3 py-2 rounded-lg hover:bg-dark-50 transition-colors">Copy</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-skool-50 border border-skool-200 rounded-lg p-4"><p class="text-sm text-skool-800"><strong>The golden rule:</strong> Post 30-60 minutes before you plan to be active. Early comments boost engagement. If you post and disappear, engagement dies.</p></div>
+      </div>
+
+      <!-- Pricing & Monetization (INLINE) -->
+      <div id="pricing-section" class="step-card bg-white border-2 border-green-200 rounded-2xl p-6 md:p-8 scroll-mt-28">
+        <h3 class="text-xl font-bold mb-3">Pricing & Monetization</h3>
+        <p class="text-dark-600 mb-4">This is the #1 thing people agonize over. Here's data from the top 1,000 Skool communities so you're not guessing.</p>
+
+        <!-- Quick answer -->
+        <div class="bg-green-50 border border-green-200 rounded-xl p-5 mb-6">
+          <h4 class="font-bold text-green-800 mb-3">The quick answer</h4>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-start gap-2"><span class="font-bold text-dark-500 mt-0.5">?</span><div><strong>No audience yet?</strong> Start free. Build to 50-100 members, then add paid.</div></div>
+            <div class="flex items-start gap-2"><span class="font-bold text-amber-600 mt-0.5">S</span><div><strong>Small audience (200-1K)?</strong> Launch at $29-$49/month with founding pricing.</div></div>
+            <div class="flex items-start gap-2"><span class="font-bold text-green-600 mt-0.5">M</span><div><strong>Established audience?</strong> Go $97/month. The most proven price on Skool.</div></div>
+            <div class="flex items-start gap-2"><span class="font-bold text-skool-600 mt-0.5">L</span><div><strong>Premium/B2B?</strong> $149-$299/month. Higher prices filter for action-takers.</div></div>
+          </div>
+        </div>
+
+        <!-- Pricing models accordion -->
+        <h4 class="font-bold text-dark-800 mb-3">5 proven pricing models</h4>
+        <div class="space-y-2 mb-6">
+          <div class="border border-dark-200 rounded-lg overflow-hidden">
+            <button onclick="togglePricing(this)" class="w-full flex items-center justify-between p-4 text-left hover:bg-dark-50 transition-colors"><span class="font-semibold">Free + Challenge Activation <span class="text-dark-500 font-normal text-sm">($0 community + $47-$97 challenges)</span></span><span class="text-dark-400">+</span></button>
+            <div class="pricing-body"><div class="px-4 pb-4 text-sm text-dark-600"><p class="mb-2">Start free to build audience, then run paid challenges to convert. Converts at 8-15% vs. 0.3% for direct pitch. Best for: new creators, no existing audience.</p><p><strong>Example:</strong> 4,200 free members, $97 challenge, 461 enrollments (11%), $68,751 revenue.</p></div></div>
+          </div>
+          <div class="border border-dark-200 rounded-lg overflow-hidden">
+            <button onclick="togglePricing(this)" class="w-full flex items-center justify-between p-4 text-left hover:bg-dark-50 transition-colors"><span class="font-semibold">Low-Ticket High-Volume <span class="text-dark-500 font-normal text-sm">($19-$29/month)</span></span><span class="text-dark-400">+</span></button>
+            <div class="pricing-body"><div class="px-4 pb-4 text-sm text-dark-600"><p class="mb-2">Low price, more members, content-heavy. Best for: hobby niches, creative communities, large audiences. 170 members at $29/mo = $4,930/month.</p><p>Pair with upsells: one-time courses ($50-$200) or coaching add-ons.</p></div></div>
+          </div>
+          <div class="border-2 border-green-300 rounded-lg overflow-hidden relative">
+            <span class="absolute top-2 right-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">MOST PROVEN</span>
+            <button onclick="togglePricing(this)" class="w-full flex items-center justify-between p-4 text-left hover:bg-green-50 transition-colors"><span class="font-semibold text-green-800">Mid-Range Coaching <span class="text-green-600 font-normal text-sm">($49-$97/month)</span></span><span class="text-green-400">+</span></button>
+            <div class="pricing-body"><div class="px-4 pb-4 text-sm text-dark-600"><p class="mb-2">The sweet spot. $97/month is the single most popular price among top earners. Dan Henry: 1,200 members at $97 = $116K/month. High enough to filter, low enough to be obvious value vs. 1:1 coaching rates ($100-$500/hr).</p><p><strong>Include:</strong> Full classroom, weekly live call, templates, replay vault, gamification, DM access, monthly challenges.</p></div></div>
+          </div>
+          <div class="border border-dark-200 rounded-lg overflow-hidden">
+            <button onclick="togglePricing(this)" class="w-full flex items-center justify-between p-4 text-left hover:bg-dark-50 transition-colors"><span class="font-semibold">Premium Filter <span class="text-dark-500 font-normal text-sm">($149-$299/month)</span></span><span class="text-dark-400">+</span></button>
+            <div class="pricing-body"><div class="px-4 pb-4 text-sm text-dark-600"><p class="mb-2">Fewer members, all serious and engaged. Better culture, better results, better testimonials. Best for: business coaching, agency training, B2B.</p><p><strong>Example:</strong> Maker School at $184/mo with 2,800 members = ~$300K/month.</p></div></div>
+          </div>
+          <div class="border border-dark-200 rounded-lg overflow-hidden">
+            <button onclick="togglePricing(this)" class="w-full flex items-center justify-between p-4 text-left hover:bg-dark-50 transition-colors"><span class="font-semibold">Tiered / Freemium <span class="text-dark-500 font-normal text-sm">(Free + $49 + $149)</span></span><span class="text-dark-400">+</span></button>
+            <div class="pricing-body"><div class="px-4 pb-4 text-sm text-dark-600"><p class="mb-2">Skool now natively supports tiers. Free members see limited content, paid members unlock everything. On 2,000 free members: 3% convert to $49 Core + 1% to $149 Pro = ~$5,900 MRR.</p><p><strong>Standard:</strong> Free (feed + Start Here) | Premium $49 (full classroom, calls) | VIP $149 (1:1 coaching, priority).</p></div></div>
+          </div>
+        </div>
+
+        <!-- Revenue table -->
+        <h4 class="font-bold text-dark-800 mb-3">Revenue at a glance</h4>
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full text-sm border-collapse">
+            <thead><tr class="bg-dark-50"><th class="text-left p-2 font-semibold">Members</th><th class="text-right p-2 font-semibold">$29</th><th class="text-right p-2 font-semibold">$49</th><th class="text-right p-2 font-semibold text-green-700">$97</th><th class="text-right p-2 font-semibold">$149</th></tr></thead>
+            <tbody class="divide-y divide-dark-100">
+              <tr><td class="p-2 font-medium">50</td><td class="p-2 text-right">$1,450</td><td class="p-2 text-right">$2,450</td><td class="p-2 text-right text-green-700 font-medium">$4,850</td><td class="p-2 text-right">$7,450</td></tr>
+              <tr class="bg-green-50"><td class="p-2 font-medium">100</td><td class="p-2 text-right">$2,900</td><td class="p-2 text-right">$4,900</td><td class="p-2 text-right text-green-700 font-bold">$9,700</td><td class="p-2 text-right">$14,900</td></tr>
+              <tr><td class="p-2 font-medium">200</td><td class="p-2 text-right">$5,800</td><td class="p-2 text-right">$9,800</td><td class="p-2 text-right text-green-700 font-medium">$19,400</td><td class="p-2 text-right">$29,800</td></tr>
+              <tr><td class="p-2 font-medium">500</td><td class="p-2 text-right">$14,500</td><td class="p-2 text-right">$24,500</td><td class="p-2 text-right text-green-700 font-medium">$48,500</td><td class="p-2 text-right">$74,500</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Founding strategy -->
+        <h4 class="font-bold text-dark-800 mb-2">Founding member strategy</h4>
+        <p class="text-sm text-dark-600 mb-3">Offer your first 20-50 members a rate locked in forever. Discount 20-30% off eventual full price. Set a deadline. Skool handles grandfathering automatically (existing members keep their rate when you raise prices).</p>
+
+        <!-- Mistakes -->
+        <h4 class="font-bold text-dark-800 mb-2">Avoid these mistakes</h4>
+        <ul class="text-sm text-dark-600 space-y-1 mb-2">
+          <li>&#10007; Pitching paid membership with no activation experience (use a challenge instead)</li>
+          <li>&#10007; Undercharging because you're nervous (price on value, not comfort)</li>
+          <li>&#10007; Staying on Hobby plan past $1,300/mo revenue (Pro saves money after that)</li>
+          <li>&#10007; No annual option (annual retains 92% vs. 68% monthly)</li>
+          <li>&#10007; Relying on membership fees alone (layer challenges + courses + coaching)</li>
+        </ul>
+        <p class="text-xs text-dark-500">For the full deep dive with niche-specific pricing and more examples, see the <a href="pricing.html" target="_blank" rel="noopener" class="underline">complete Pricing Guide</a>.</p>
+      </div>
+
+      <!-- Done -->
+      <div class="bg-gradient-to-br from-skool-600 to-skool-800 rounded-2xl p-6 md:p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-3">You did it. You're ready.</h2>
+        <p class="text-skool-100 mb-6 max-w-lg mx-auto">That's the whole thing. Create your community, put content in it, invite people, show up consistently. The rest is iteration. And you're not doing this alone. The Skool community is tight-knit. Lean on it.</p>
+        <a href="https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534" target="_blank" rel="noopener" class="inline-block bg-white text-skool-700 font-semibold px-8 py-3 rounded-lg hover:bg-skool-50 transition-colors">Create Your Skool Account</a>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Migration + Resources -->
+  <section class="pb-16 px-4">
+    <div class="max-w-3xl mx-auto pt-12">
+      <h2 class="text-xl font-bold text-center mb-2">More resources</h2>
+      <p class="text-center text-dark-600 mb-6">Switching from another platform? We've got migration guides.</p>
+      <div class="grid sm:grid-cols-2 gap-4 mb-6">
+        <a href="ai-prompts.html" target="_blank" class="block bg-violet-50 border border-violet-200 rounded-xl p-5 hover:shadow-md transition-all"><h3 class="font-bold text-violet-700 mb-1">AI Toolkit (Full Page)</h3><p class="text-sm text-dark-600">All 14 prompts with global fill-in fields. Great for doing everything at once.</p></a>
+        <a href="pricing.html" target="_blank" class="block bg-green-50 border border-green-200 rounded-xl p-5 hover:shadow-md transition-all"><h3 class="font-bold text-green-700 mb-1">Pricing Guide (Full Page)</h3><p class="text-sm text-dark-600">Complete deep dive with niche pricing, platform costs, and more examples.</p></a>
+      </div>
       <div class="grid sm:grid-cols-2 gap-4">
-        <a href="from-circle.html" class="block bg-white border border-dark-200 rounded-xl p-5 hover:border-skool-300 hover:shadow-md transition-all">
-          <h3 class="font-bold text-lg mb-1">From Circle</h3>
-          <p class="text-sm text-dark-600">What maps where, what you'll miss, what you'll gain, and a step-by-step migration plan.</p>
-        </a>
-        <a href="from-mighty-networks.html" class="block bg-white border border-dark-200 rounded-xl p-5 hover:border-skool-300 hover:shadow-md transition-all">
-          <h3 class="font-bold text-lg mb-1">From Mighty Networks</h3>
-          <p class="text-sm text-dark-600">Switching from Mighty? Your content and members can come with you.</p>
-        </a>
-        <a href="from-discord.html" class="block bg-white border border-dark-200 rounded-xl p-5 hover:border-skool-300 hover:shadow-md transition-all">
-          <h3 class="font-bold text-lg mb-1">From Discord</h3>
-          <p class="text-sm text-dark-600">Upgrading from a free chat server to a professional paid community.</p>
-        </a>
-        <a href="from-kajabi.html" class="block bg-white border border-dark-200 rounded-xl p-5 hover:border-skool-300 hover:shadow-md transition-all">
-          <h3 class="font-bold text-lg mb-1">From Kajabi</h3>
-          <p class="text-sm text-dark-600">Save $600-$3,600/year. Skool does community + courses for $99/mo flat.</p>
-        </a>
+        <a href="from-circle.html" target="_blank" class="block bg-white border border-dark-200 rounded-xl p-4 hover:border-skool-300 hover:shadow-md transition-all"><h4 class="font-bold mb-1">From Circle</h4><p class="text-sm text-dark-600">What maps where and step-by-step migration.</p></a>
+        <a href="from-mighty-networks.html" target="_blank" class="block bg-white border border-dark-200 rounded-xl p-4 hover:border-skool-300 hover:shadow-md transition-all"><h4 class="font-bold mb-1">From Mighty Networks</h4><p class="text-sm text-dark-600">Your content and members can come with you.</p></a>
+        <a href="from-discord.html" target="_blank" class="block bg-white border border-dark-200 rounded-xl p-4 hover:border-skool-300 hover:shadow-md transition-all"><h4 class="font-bold mb-1">From Discord</h4><p class="text-sm text-dark-600">Upgrading to a professional paid community.</p></a>
+        <a href="from-kajabi.html" target="_blank" class="block bg-white border border-dark-200 rounded-xl p-4 hover:border-skool-300 hover:shadow-md transition-all"><h4 class="font-bold mb-1">From Kajabi</h4><p class="text-sm text-dark-600">Save $600-$3,600/year with Skool.</p></a>
       </div>
     </div>
   </section>
@@ -516,37 +629,138 @@
   </footer>
 
   <script>
-    const REFERRAL_URL = 'https://www.skool.com/signup?ref=a8e71546cfbf435f8cd2b170d56ee534';
-    const STORAGE_KEY = 'skool_guide_signed_up';
+    // ═══ GLOBAL FIELD MAP ═══
+    const GLOBAL_MAP = {
+      'gf-name': ['[YOUR NAME]'],
+      'gf-community': ['[COMMUNITY NAME]', '[NAME]'],
+      'gf-topic': ['[YOUR TOPIC/NICHE]', '[YOUR TOPIC]', '[TOPIC]'],
+      'gf-audience': ['[YOUR AUDIENCE]', '[AUDIENCE]', '[DESCRIBE YOUR IDEAL MEMBER]', '[DESCRIBE AUDIENCE]', '[DESCRIBE MEMBERS]', '[WHO]', '[WHO THEY ARE]'],
+      'gf-transformation': ['[TRANSFORMATION]', '[OUTCOME]', '[OUTCOME THEY GET]'],
+      'gf-platform': ['[PREVIOUS PLATFORM]'],
+    };
 
+    // ═══ GATE ═══
+    const STORAGE_KEY = 'skool_guide_signed_up';
     function handleSignupClick() {
       localStorage.setItem(STORAGE_KEY, 'clicked');
-      setTimeout(() => {
-        document.getElementById('continue-btn').classList.remove('hidden');
-        document.getElementById('continue-btn').classList.add('fade-in');
-      }, 1500);
+      setTimeout(() => { document.getElementById('continue-btn').classList.remove('hidden'); document.getElementById('continue-btn').classList.add('fade-in'); }, 1500);
     }
-
     function unlockGuide() {
       localStorage.setItem(STORAGE_KEY, 'unlocked');
-      const gated = document.getElementById('gated-content');
-      const overlay = document.getElementById('gate-message');
-      const lockMsg = document.getElementById('gate-locked');
-
-      gated.classList.remove('gate-blur');
-      gated.classList.add('fade-in');
-      overlay.style.display = 'none';
-      lockMsg.innerHTML = '<p class="text-sm text-green-600 font-medium">&#10003; Account created. Full guide unlocked below.</p>';
+      document.getElementById('gated-content').classList.remove('gate-blur');
+      document.getElementById('gated-content').classList.add('fade-in');
+      document.getElementById('gate-message').style.display = 'none';
+      document.getElementById('gate-locked').innerHTML = '<p class="text-sm text-green-600 font-medium">&#10003; Account created. Full guide unlocked.</p>';
     }
 
-    // Check if already unlocked
-    window.addEventListener('DOMContentLoaded', () => {
-      const status = localStorage.getItem(STORAGE_KEY);
-      if (status === 'unlocked') {
-        unlockGuide();
-      } else if (status === 'clicked') {
-        document.getElementById('continue-btn').classList.remove('hidden');
+    // ═══ GLOBAL FIELDS ═══
+    function toggleGlobalFields() {
+      const el = document.getElementById('global-fields');
+      const arrow = document.getElementById('gf-arrow');
+      el.classList.toggle('open');
+      arrow.classList.toggle('open');
+    }
+
+    // ═══ AI DRAWERS ═══
+    function toggleDrawer(btn) {
+      const drawer = btn.nextElementSibling;
+      const arrow = btn.querySelector('.ai-toggle-arrow');
+      drawer.classList.toggle('open');
+      if (arrow) arrow.classList.toggle('open');
+    }
+
+    // ═══ PRICING ACCORDION ═══
+    function togglePricing(btn) {
+      const body = btn.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.pricing-body').forEach(b => b.classList.remove('open'));
+      // Open clicked (if wasn't open)
+      if (!isOpen) body.classList.add('open');
+    }
+
+    // ═══ PROMPT LINKS + GLOBAL FIELDS ═══
+    function applyGlobalFields(text) {
+      for (const [fieldId, brackets] of Object.entries(GLOBAL_MAP)) {
+        const input = document.getElementById(fieldId);
+        if (input && input.value.trim()) {
+          brackets.forEach(bracket => {
+            const escaped = bracket.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            text = text.replace(new RegExp(escaped, 'g'), input.value.trim());
+          });
+        }
       }
+      return text;
+    }
+
+    function updateAllPrompts() {
+      document.querySelectorAll('.prompt-card').forEach(card => {
+        const promptEl = card.querySelector('.prompt-text');
+        if (!promptEl) return;
+        const original = promptEl.dataset.original || promptEl.textContent.trim();
+        if (!promptEl.dataset.original) promptEl.dataset.original = original;
+        const filled = applyGlobalFields(original);
+        promptEl.textContent = filled;
+        const encoded = encodeURIComponent(filled);
+        const cl = card.querySelector('.claude-link'); if (cl) cl.href = `https://claude.ai/new?q=${encoded}`;
+        const cg = card.querySelector('.chatgpt-link'); if (cg) cg.href = `https://chatgpt.com/?q=${encoded}`;
+        const px = card.querySelector('.perplexity-link'); if (px) px.href = `https://www.perplexity.ai/search?q=${encoded}`;
+      });
+    }
+
+    function copyPrompt(btn) {
+      const card = btn.closest('.prompt-card');
+      const text = card.querySelector('.prompt-text').textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied'); btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
+
+    // ═══ PROGRESS BAR ═══
+    function scrollToPhase(n) { document.getElementById('phase-' + n)?.scrollIntoView({ behavior: 'smooth' }); }
+
+    function updateProgressBar() {
+      const sections = document.querySelectorAll('[data-phase-section]');
+      let activePhase = 1;
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < 200) activePhase = parseInt(section.dataset.phaseSection);
+      });
+      document.querySelectorAll('.phase-dot').forEach(dot => {
+        const phase = parseInt(dot.dataset.phase);
+        dot.classList.toggle('active', phase === activePhase);
+        dot.classList.toggle('completed', phase < activePhase);
+      });
+      document.querySelectorAll('.phase-line').forEach(line => {
+        const linePhase = parseInt(line.dataset.line);
+        line.classList.toggle('completed', linePhase < activePhase);
+      });
+    }
+
+    // ═══ INIT ═══
+    document.addEventListener('DOMContentLoaded', () => {
+      // Gate
+      const status = localStorage.getItem(STORAGE_KEY);
+      if (status === 'unlocked') unlockGuide();
+      else if (status === 'clicked') document.getElementById('continue-btn').classList.remove('hidden');
+
+      // Global fields: restore from localStorage
+      document.querySelectorAll('.global-field').forEach(input => {
+        const saved = localStorage.getItem('skool_' + input.id);
+        if (saved) input.value = saved;
+        input.addEventListener('input', () => {
+          localStorage.setItem('skool_' + input.id, input.value);
+          updateAllPrompts();
+        });
+      });
+
+      // Initial prompt link setup
+      updateAllPrompts();
+
+      // Progress bar
+      window.addEventListener('scroll', updateProgressBar);
+      updateProgressBar();
     });
   </script>
 </body>
