@@ -48,9 +48,42 @@
     /* Pricing accordion */
     .pricing-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
     .pricing-body.open { max-height: 2000px; }
+    /* Side nav */
+    .side-nav { position: fixed; top: 110px; left: max(1rem, calc((100vw - 900px) / 2 - 200px)); width: 170px; z-index: 30; display: none; }
+    @media (min-width: 1280px) { .side-nav { display: block; } }
+    .side-nav-phase { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #868e96; margin-bottom: 0.25rem; margin-top: 0.75rem; }
+    .side-nav-phase:first-child { margin-top: 0; }
+    .side-nav a { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #868e96; padding: 0.25rem 0; text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; padding-left: 0.75rem; }
+    .side-nav a:hover { color: #343a40; }
+    .side-nav a.active { color: #4c6ef5; border-left-color: #4c6ef5; font-weight: 600; }
+    .side-nav a.completed { color: #495057; }
+    .side-nav-dot { width: 6px; height: 6px; border-radius: 50%; background: #ced4da; flex-shrink: 0; transition: all 0.2s; }
+    .side-nav a.active .side-nav-dot { background: #4c6ef5; width: 8px; height: 8px; }
+    .side-nav a.completed .side-nav-dot { background: #4c6ef5; }
   </style>
 </head>
 <body class="bg-white text-dark-800">
+
+  <!-- Side Navigation (desktop only) -->
+  <nav class="side-nav" id="side-nav">
+    <div class="side-nav-phase">Get Started</div>
+    <a href="#step-create" data-step="step-create"><span class="side-nav-dot"></span>Create Account</a>
+    <a href="#step-explore" data-step="step-explore"><span class="side-nav-dot"></span>Explore Skool</a>
+
+    <div class="side-nav-phase">Build</div>
+    <a href="#step-name" data-step="step-name"><span class="side-nav-dot"></span>Name & Setup</a>
+    <a href="#step-settings" data-step="step-settings"><span class="side-nav-dot"></span>Settings</a>
+    <a href="#step-classroom" data-step="step-classroom"><span class="side-nav-dot"></span>Classroom</a>
+    <a href="#step-gamification" data-step="step-gamification"><span class="side-nav-dot"></span>Gamification</a>
+
+    <div class="side-nav-phase">Launch</div>
+    <a href="#step-welcome" data-step="step-welcome"><span class="side-nav-dot"></span>Welcome Content</a>
+    <a href="#step-members" data-step="step-members"><span class="side-nav-dot"></span>First Members</a>
+
+    <div class="side-nav-phase">Grow</div>
+    <a href="#step-firstweek" data-step="step-firstweek"><span class="side-nav-dot"></span>First Week</a>
+    <a href="#step-pricing" data-step="step-pricing"><span class="side-nav-dot"></span>Pricing</a>
+  </nav>
 
   <!-- Nav -->
   <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-dark-200 z-50">
@@ -159,7 +192,7 @@
 
       <!-- Step: Create Account (THE GATE) -->
       <div id="step-1" class="step-card bg-white border-2 border-skool-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Create Your Skool Account</h3>
+        <h3 id="step-create" class="text-xl font-bold mb-3 scroll-mt-32">Create Your Skool Account</h3>
         <p class="text-dark-600 mb-4">Everything starts here. It's free to start with a 14-day trial on the Hobby plan ($9/month after that). Takes about 60 seconds.</p>
         <div class="bg-skool-50 rounded-xl p-5 mb-4">
           <p class="text-sm text-dark-600 mb-3">Skool gives you everything in one place: community, courses, live calls, payments, and gamification. No duct-taping 5 different tools together.</p>
@@ -184,7 +217,7 @@
 
       <!-- Step: Explore -->
       <div class="step-card bg-white border-2 border-amber-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Explore Before You Build</h3>
+        <h3 id="step-explore" class="text-xl font-bold mb-3 scroll-mt-32">Explore Before You Build</h3>
         <p class="text-dark-600 mb-4">I know you're excited to start building, but trust me on this: spend an hour or two inside other Skool communities first. See what the best ones look like. You'll avoid so many mistakes.</p>
         <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-5">
           <p class="text-sm text-amber-800"><strong>This is important.</strong> The Skool community is really tight-knit. You're not building alone. Join others, inspire one another, help one another grow.</p>
@@ -232,7 +265,7 @@
 
       <!-- Step: Name & Setup -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Name & Set Up Your Community</h3>
+        <h3 id="step-name" class="text-xl font-bold mb-3 scroll-mt-32">Name & Set Up Your Community</h3>
         <p class="text-dark-600 mb-4">Don't overthink this part. You can change everything later. The goal right now is just to get it created.</p>
         <ul class="checklist text-dark-700 mb-4">
           <li><strong>Pick a clear name.</strong> "The Fitness Lab" beats "John's Group." Clear beats clever every time.</li>
@@ -279,7 +312,7 @@ Important: The banner should work well as a small thumbnail on mobile too. Keep 
 
       <!-- Step: Settings -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Configure Your Settings</h3>
+        <h3 id="step-settings" class="text-xl font-bold mb-3 scroll-mt-32">Configure Your Settings</h3>
         <p class="text-dark-600 mb-4">Before you invite anyone, take 10 minutes to get the basics right. These settings shape the experience your members will have from the moment they click "Join."</p>
         <ul class="checklist text-dark-700 mb-4">
           <li><strong>Set your privacy.</strong> "Public" means anyone on Skool can find you. "Private" means invite-only. Most communities start public.</li>
@@ -308,7 +341,7 @@ Keep each question under 150 characters (Skool's limit). Make the first question
 
       <!-- Step: Classroom -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Build Your Classroom</h3>
+        <h3 id="step-classroom" class="text-xl font-bold mb-3 scroll-mt-32">Build Your Classroom</h3>
         <p class="text-dark-600 mb-4">This is where your courses live, and it's the part people overthink the most. You do NOT need 50 lessons. You need three modules. That's it.</p>
         <ul class="checklist text-dark-700 mb-4">
           <li><strong>Create a "Start Here" module.</strong> 3 short lessons: welcome, how this works, first action item. Under 5 minutes each.</li>
@@ -366,7 +399,7 @@ Give me: 1. A visual system (consistent style across all thumbnails), 2. For eac
 
       <!-- Step: Gamification -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Set Up Gamification</h3>
+        <h3 id="step-gamification" class="text-xl font-bold mb-3 scroll-mt-32">Set Up Gamification</h3>
         <p class="text-dark-600 mb-4">One of Skool's secret weapons. Members earn points when others like their posts and comments. Points unlock levels. Levels unlock content. It drives engagement on autopilot.</p>
         <ul class="checklist text-dark-700 mb-4">
           <li><strong>Customize your level names.</strong> 9 levels. Don't leave them as "Level 1, Level 2." Rename them to fit your theme.</li>
@@ -421,7 +454,7 @@ Points required: L1=0, L2=5, L3=20, L4=65, L5=155, L6=515, L7=2015, L8=8015, L9=
 
       <!-- Step: Welcome Content -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Create Your Welcome Content</h3>
+        <h3 id="step-welcome" class="text-xl font-bold mb-3 scroll-mt-32">Create Your Welcome Content</h3>
         <p class="text-dark-600 mb-4">Nobody wants to be the first person to post in an empty room. Seed the community with content before inviting anyone. This is where the AI prompts really shine -- you can generate all of this in minutes.</p>
         <ul class="checklist text-dark-700 mb-4">
           <li><strong>Write and pin a welcome post.</strong> Introduce yourself, what this community is about, and the first 3 action items.</li>
@@ -466,7 +499,7 @@ Each post should: be in first person, end with a question or CTA, feel natural, 
 
       <!-- Step: First Members -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Get Your First Members</h3>
+        <h3 id="step-members" class="text-xl font-bold mb-3 scroll-mt-32">Get Your First Members</h3>
         <p class="text-dark-600 mb-4">Your community is set up. Now get real people in the door. There are a million ways, but here are the ones that actually work, starting with the most organic.</p>
 
         <h4 class="font-semibold text-dark-800 mb-2">The organic way (start here)</h4>
@@ -530,7 +563,7 @@ Each: [MEMBER_NAME] placeholder, feel personal not automated, 3-5 sentences max,
 
       <!-- Step: First Week -->
       <div class="step-card bg-white border border-dark-200 rounded-2xl p-6 md:p-8">
-        <h3 class="text-xl font-bold mb-3">Your First Week Playbook</h3>
+        <h3 id="step-firstweek" class="text-xl font-bold mb-3 scroll-mt-32">Your First Week Playbook</h3>
         <p class="text-dark-600 mb-4">Consistency matters so much more than intensity. Here's a simple weekly rhythm you can lean on.</p>
         <div class="overflow-x-auto mb-4">
           <table class="w-full text-sm border-collapse">
@@ -569,7 +602,7 @@ For each day give me: 1. Post title, 2. Opening line (hook), 3. CTA at the end (
 
       <!-- Pricing & Monetization (INLINE) -->
       <div id="pricing-section" class="step-card bg-white border-2 border-green-200 rounded-2xl p-6 md:p-8 scroll-mt-28">
-        <h3 class="text-xl font-bold mb-3">Pricing & Monetization</h3>
+        <h3 id="step-pricing" class="text-xl font-bold mb-3 scroll-mt-32">Pricing & Monetization</h3>
         <p class="text-dark-600 mb-4">This is the #1 thing people agonize over. Here's data from the top 1,000 Skool communities so you're not guessing.</p>
 
         <!-- Quick answer -->
@@ -764,8 +797,10 @@ For each day give me: 1. Post title, 2. Opening line (hook), 3. CTA at the end (
       });
     }
 
-    // ═══ PROGRESS BAR ═══
+    // ═══ PROGRESS BAR + SIDE NAV ═══
     function scrollToPhase(n) { document.getElementById('phase-' + n)?.scrollIntoView({ behavior: 'smooth' }); }
+
+    const STEP_IDS = ['step-create','step-explore','step-name','step-settings','step-classroom','step-gamification','step-welcome','step-members','step-firstweek','step-pricing'];
 
     function updateProgressBar() {
       const sections = document.querySelectorAll('[data-phase-section]');
@@ -782,6 +817,20 @@ For each day give me: 1. Post title, 2. Opening line (hook), 3. CTA at the end (
       document.querySelectorAll('.phase-line').forEach(line => {
         const linePhase = parseInt(line.dataset.line);
         line.classList.toggle('completed', linePhase < activePhase);
+      });
+
+      // Side nav
+      let activeStep = STEP_IDS[0];
+      STEP_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 250) activeStep = id;
+      });
+      const activeIdx = STEP_IDS.indexOf(activeStep);
+      document.querySelectorAll('#side-nav a[data-step]').forEach(link => {
+        const stepIdx = STEP_IDS.indexOf(link.dataset.step);
+        link.classList.remove('active', 'completed');
+        if (link.dataset.step === activeStep) link.classList.add('active');
+        else if (stepIdx < activeIdx) link.classList.add('completed');
       });
     }
 
